@@ -16,6 +16,7 @@
   margin-bottom: 24px;
   outline: none;
   line-height: 13px;
+
   &::placeholder {
     color: $text-secondary;
     opacity: 0;
@@ -35,8 +36,8 @@
 
   }
 
-  &:focus{
-    &::placeholder{
+  &:focus {
+    &::placeholder {
       opacity: 1;
     }
   }

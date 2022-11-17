@@ -66,10 +66,8 @@ button {
 }
 
 .app-wrapper {
+  @include flex-row-all-center;
   background: $white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 100%;
   overflow: hidden;
 }

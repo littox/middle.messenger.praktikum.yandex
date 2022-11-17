@@ -1,24 +1,20 @@
 
 .profile {
+  @include flex-column;
   min-width: 520px;
-  display: flex;
-  flex-direction: column;
 }
 .profile-nav {
+  @include flex-row-all-center;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: $chat-list-bg;
   width: 65px;
   border-right: $chat-item-border;
 }
 
 .profile-wrapper {
+  @include flex-column;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items:  center;
+  align-items: center;
   padding: 50px 0 0 0;
   align-self: flex-start;
 }
