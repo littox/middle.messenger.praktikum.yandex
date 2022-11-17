@@ -1,16 +1,14 @@
 .form-wrapper {
+  @include flex-column;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
   border-radius: 12px;
   padding: 50px 30px 30px;
-  display: flex;
-  flex-direction: column;
   min-height: 460px;
   min-width: 340px;
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   flex: 1;
 }
 

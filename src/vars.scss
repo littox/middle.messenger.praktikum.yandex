@@ -12,3 +12,13 @@ $chat-item-border: 1px solid #EAEAEA;
 $chat-list-bg: #FBFBFB;
 $chat-item-hover-bg: darken($chat-list-bg, 1);
 $chat-item-active-bg: #E4EDFD;
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-row-all-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

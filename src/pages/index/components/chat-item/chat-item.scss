@@ -43,8 +43,7 @@
 }
 
 .chat-last-message-info{
-    display: flex;
-    flex-direction: column;
+    @include flex-column;
     align-items: flex-end;
 }
 .message-date{
@@ -52,13 +51,11 @@
     color: $text-secondary;
     margin: 0 0 15px 0;
 }
-.unread-counter{
+.unread-counter {
+    @include flex-row-all-center;
     width: 20px;
     height: 20px;
     background: $primary;
     color: $white;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }

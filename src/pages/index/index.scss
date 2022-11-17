@@ -1,6 +1,5 @@
 .chat-list-wrapper {
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   background: $chat-list-bg;
   width: 25%;
   min-width: 310px;
@@ -10,8 +9,7 @@
 }
 
 .chat-list-header {
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   padding: 20px 10px 0;
 }
 
@@ -49,11 +47,10 @@
 }
 
 .chat-content-wrapper {
+  @include flex-column;
   width: 75%;
   height: 100%;
   padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
 }
 
 .chat-header {
@@ -115,14 +112,12 @@
 }
 
 .arrow-btn {
+  @include flex-row-all-center;
   background: $primary;
   color: $white;
   border-radius: 50%;
   width: 28px;
   height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   &__left {
     transform: rotate(180deg);
