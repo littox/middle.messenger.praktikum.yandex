@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css');
+@import 'vars';
+@import 'components/base-form/form';
+@import 'components/text-input/text-input';
+@import 'pages/index/index';
+@import 'pages/index/components/chat-item/chat-item';
+@import 'pages/profile/profile';
+@import 'pages/profile/components/input/input';
+@import 'components/error/error';
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body, html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family;
+  font-size: $font-size;
+  font-weight: 500;
+  color: $text-primary;
+  background-color: $white;
+}
+
+a {
+  color: $primary;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.red {
+  color: #ff0000;
+}
+a.btn {
+  text-decoration: none;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+button {
+  border: none;
+  background: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.ta-center {
+  text-align: center;
+}
+
+.h1 {
+  font-size: $h1-fsz;
+  margin-bottom: 35px;
+}
+
+.app-wrapper {
+  background: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  overflow: hidden;
+}
+
+.btn-primary {
+  display: block;
+  padding: 12px 20px;
+  background-color: $primary;
+  color: $white;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

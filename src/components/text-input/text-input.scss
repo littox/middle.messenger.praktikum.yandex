@@ -1,0 +1,54 @@
+
+.input-wrapper {
+  display: flex;
+  flex-flow: column-reverse;
+}
+
+.label, .input {
+  transition: all 0.2s;
+}
+
+.input {
+  display: block;
+  border: none;
+  border-bottom: 1px solid $primary;
+  padding: 6px 0 8px;
+  margin-bottom: 24px;
+  outline: none;
+  line-height: 13px;
+  &::placeholder {
+    color: $text-secondary;
+    opacity: 0;
+    transition: inherit;
+  }
+
+  &:placeholder-shown + .label {
+    cursor: text;
+    color: $text-secondary;
+    max-width: 66.66%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transform-origin: left bottom;
+    transform: translate(0, calc(100% + 8px)) scale(1);
+    line-height: 13px;
+
+  }
+
+  &:focus{
+    &::placeholder{
+      opacity: 1;
+    }
+  }
+
+  &:not(:placeholder-shown),
+  &:focus {
+    & + .label {
+      font-size: 10px;
+      line-height: 13px;
+      transform: translate(0, 0);
+      cursor: pointer;
+      color: $text-secondary;
+    }
+  }
+}
