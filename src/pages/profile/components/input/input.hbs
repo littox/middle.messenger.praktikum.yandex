@@ -1,0 +1,7 @@
+<div class="profile-form-control">
+    <label for="{{input.name}}" class="label" class="profile-form-label">
+        {{input.placeholder}}
+    </label>
+    <input type="{{input.type}}" name="{{input.name}}" id="{{input.name}}" value="{{input.value}}"
+           class="profile-form-input" {{#if input.disabled}}disabled{{/if}}>
+</div>

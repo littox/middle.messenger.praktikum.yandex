@@ -1,0 +1,15 @@
+{{#extend "layout/main"}}
+    {{#content "page-content"}}
+        {{#extend "components/base-form/form" action="" submitLink="../index/index.hbs" submitText="Войти" formTitle="Вход"}}
+            {{#content "content"}}
+                {{>components/text-input/text-input placeholder="Логин" name="login" type="text"}}
+                {{>components/text-input/text-input placeholder="Пароль" name="password" type="password"}}
+            {{/content}}
+            {{#content "footer-content"}}
+                <p class="ta-center">
+                    <a href="../registration/registration.hbs" class="link-primary">Зарегистрироваться</a>
+                </p>
+            {{/content}}
+        {{/extend}}
+    {{/content}}
+{{/extend}}
