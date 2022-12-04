@@ -41,17 +41,16 @@ const PAGES = {
           }
 
           console.log(res);
+          setTimeout(() => { window.location = '/chat'; }, 2000);
         },
         focusin: (event) => {
           if (event.target.tagName === 'INPUT') {
             event.preventDefault();
-            console.log(event.target.value);
           }
         },
         focusout: (event) => {
           if (event.target.tagName === 'INPUT') {
             event.preventDefault();
-            console.log(event.target.value);
           }
         },
       },
@@ -124,17 +123,16 @@ const PAGES = {
           }
 
           console.log(res);
+          setTimeout(() => { window.location = '/chat'; }, 2000);
         },
         focusin: (event) => {
           if (event.target.tagName === 'INPUT') {
             event.preventDefault();
-            console.log(event.target.value);
           }
         },
         focusout: (event) => {
           if (event.target.tagName === 'INPUT') {
             event.preventDefault();
-            console.log(event.target.value);
           }
         },
       },
