@@ -1,7 +1,7 @@
 import Component from '../../utils/Component';
 import template from './text-input.hbs';
 
-type TextInputProps = {
+export type TextInputProps = {
   type: string;
   name: string;
   placeholder: string;

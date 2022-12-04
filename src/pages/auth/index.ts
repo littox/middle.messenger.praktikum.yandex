@@ -1,16 +1,13 @@
 import Component from '../../utils/Component';
 import template from './auth.hbs';
+import BaseForm from '../../components/base-form';
 
-type AuthProps = {
-  action: string;
-  formTitle: string;
-  submitLink: string;
-  submitText: string;
+export type AuthProps = {
+  form: BaseForm;
 };
 
-export default class Auth extends Component<AuthProps> {
+export default class Auth extends Component {
   render(): DocumentFragment {
-    return this.compile(template, { ...this.props, children: this.children });
-    // return template({ ...this.props });
+    return this.compile(template, { form: this.children.form });
   }
 }
