@@ -7,10 +7,14 @@ import Component from './utils/Component';
 import ChatItem from './pages/chat/components/chat-item';
 import Chat, { ChatProps } from './pages/chat';
 import chats from './pages/chat/data/chats';
+import inputs from './pages/profile/data/inputs';
+import ProfileInput from './pages/profile/components/input';
+import Profile, { ProfileProps } from './pages/profile';
 
 registerComponent('TextInput', TextInput);
 registerComponent('BaseForm', BaseForm);
 registerComponent('ChatItem', ChatItem);
+registerComponent('ProfileInput', ProfileInput);
 
 const PAGES = {
   '/404': () => new Error({
@@ -22,6 +26,7 @@ const PAGES = {
     text: 'Мы уже фиксим',
   } as ErrorProps),
   '/chat': () => new Chat({ chats } as ChatProps),
+  '/profile': () => new Profile({ inputs } as ProfileProps),
   '/registration': () => new Auth({
     form: new BaseForm({
       events: {
