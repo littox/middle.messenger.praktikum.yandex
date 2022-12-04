@@ -151,11 +151,7 @@ export default class Component<T extends Record<string, unknown> = any> {
   }
 
   private _removeEvents(): void {
-    const { events = {} } = this.props;
-
-    Object.keys(events).forEach((eventName) => {
-      this._element.addEventListener(eventName, events[eventName]);
-    });
+    this._element?.replaceWith(this._element?.cloneNode(true));
   }
 
   private _addEvents(): void {
