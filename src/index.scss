@@ -3,8 +3,8 @@
 @import "vars";
 @import "components/base-form/base-form";
 @import "components/text-input/text-input";
-@import "pages/index/index";
-@import "pages/index/components/chat-item/chat-item";
+@import "pages/chat/chat";
+@import "pages/chat/components/chat-item/chat-item";
 @import "pages/profile/profile";
 @import "pages/profile/components/input/input";
 @import "components/error/error";
@@ -78,6 +78,7 @@ button {
 
 .btn-primary {
   display: block;
+  width: 100%;
   padding: 12px 20px;
   background-color: $primary;
   color: $white;
@@ -89,4 +90,7 @@ button {
   &:hover {
     text-decoration: none;
   }
+}
+.full-width {
+  width: 100%;
 }
