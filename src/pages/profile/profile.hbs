@@ -1,34 +1,31 @@
-{{#extend "layout/main" }}
-    {{#content "page-content"}}
-        <nav class="profile-nav">
-            <a href="../index/index.hbs" class="btn arrow-btn arrow-btn__left">
-                &#11157;
-            </a>
-        </nav>
-        <div class="profile-wrapper">
-            <div class="profile">
-                <img src="https://picsum.photos/130/130" alt="user_name" class="profile-avatar">
-                <div class="profile-name">
-                    Антон
-                </div>
-                <form action="" class="profile-form">
-                    {{#each inputs.data as |input|}}
-                        {{>pages/profile/components/input/input input=input}}
-
-                    {{/each}}
-                </form>
-                <div class="profile-actions">
-                    <div class="profile-form-control">
-                        <a href="#">Изменить данные</a>
-                    </div>
-                    <div class="profile-form-control">
-                        <a href="#">Изменить пароль</a>
-                    </div>
-                    <div class="profile-form-control">
-                        <a href="#" class="red">Выйти</a>
-                    </div>
-                </div>
-            </div>
+<div class="app-wrapper full-width">
+  <nav class="profile-nav">
+    <a href="/chat" class="btn arrow-btn arrow-btn__left">
+      &#11157;
+    </a>
+  </nav>
+  <div class="profile-wrapper">
+    <div class="profile">
+      <img src="https://picsum.photos/130/130" alt="user_name" class="profile-avatar">
+      <div class="profile-name">
+        Антон
+      </div>
+      <form action="" class="profile-form">
+        {{#each inputs as |input|}}
+          {{{ProfileInput input=input}}}
+        {{/each}}
+      </form>
+      <div class="profile-actions">
+        <div class="profile-form-control">
+          <a href="#">Изменить данные</a>
         </div>
-    {{/content}}
-{{/extend}}
+        <div class="profile-form-control">
+          <a href="#">Изменить пароль</a>
+        </div>
+        <div class="profile-form-control">
+          <a href="/" class="red">Выйти</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

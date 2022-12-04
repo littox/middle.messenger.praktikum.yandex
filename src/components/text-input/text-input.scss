@@ -1,10 +1,10 @@
-
 .input-wrapper {
   display: flex;
   flex-flow: column-reverse;
 }
 
-.label, .input {
+.label,
+.input {
   transition: all 0.2s;
 }
 
@@ -33,7 +33,6 @@
     transform-origin: left bottom;
     transform: translate(0, calc(100% + 8px)) scale(1);
     line-height: 13px;
-
   }
 
   &:focus {

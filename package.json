@@ -1,19 +1,29 @@
 {
   "name": "m1",
   "scripts": {
-    "dev": "parcel src/pages/auth/auth.hbs  --no-cache",
-    "build": "parcel build src/pages/auth/auth.hbs ",
+    "dev": "parcel src/index.html  --no-cache",
+    "build": "parcel build src/index.html",
     "start": "npm run build && node server.js"
   },
   "devDependencies": {
-    "@anikin/parcel-transformer-handlebars": "^1.0.9",
-    "@parcel/config-default": "^2.7.0",
-    "@parcel/transformer-sass": "^2.8.0",
-    "parcel": "^2.7.0"
+    "@anikin/parcel-transformer-handlebars": "1.0.9",
+    "@anikin/parcel-transformer-handlebars-precompile": "1.0.1",
+    "@parcel/config-default": "2.8.0",
+    "@parcel/transformer-sass": "2.8.0",
+    "@typescript-eslint/eslint-plugin": "5.45.0",
+    "@typescript-eslint/parser": "5.45.0",
+    "eslint": "8.28.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-typescript": "17.0.0",
+    "parcel": "2.8.0",
+    "stylelint": "14.15.0",
+    "stylelint-config-standard-scss": "6.1.0",
+    "typescript": "4.9.3"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "handlebars": "^4.7.7"
+    "express": "4.18.2",
+    "handlebars": "4.7.7",
+    "nanoid": "4.0.0"
   },
   "version": "1.0.0",
   "license": "ISC"

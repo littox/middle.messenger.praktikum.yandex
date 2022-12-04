@@ -1,17 +1,18 @@
-$primary: #3369F3;
-$error: #FF2F2F;
-$text-primary: #1E1E1E;
-$text-secondary: #999999;
-$input-bg-secondary: #EFEFEF;
-$white: #FFFFFF;
-$font-family: 'Inter', sans-serif;
+$primary: #3369f3;
+$error: #ff2f2f;
+$text-primary: #1e1e1e;
+$text-secondary: #999;
+$input-bg-secondary: #efefef;
+$white: #fff;
+$font-family: "Inter", sans-serif;
 $font-size: 13px;
 $small-fsz: 12px;
 $h1-fsz: 20px;
-$chat-item-border: 1px solid #EAEAEA;
-$chat-list-bg: #FBFBFB;
+$chat-item-border: 1px solid #eaeaea;
+$chat-list-bg: #fbfbfb;
 $chat-item-hover-bg: darken($chat-list-bg, 1);
-$chat-item-active-bg: #E4EDFD;
+$chat-item-active-bg: #e4edfd;
+
 @mixin flex-column {
   display: flex;
   flex-direction: column;
