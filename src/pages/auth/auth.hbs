@@ -1,15 +1,17 @@
-{{#extend "layout/main"}}
-    {{#content "page-content"}}
-        {{#extend "components/base-form/form" action="" submitLink="../index/index.hbs" submitText="Войти" formTitle="Вход"}}
-            {{#content "content"}}
-                {{>components/text-input/text-input placeholder="Логин" name="login" type="text"}}
-                {{>components/text-input/text-input placeholder="Пароль" name="password" type="password"}}
-            {{/content}}
-            {{#content "footer-content"}}
-                <p class="ta-center">
-                    <a href="../registration/registration.hbs" class="link-primary">Зарегистрироваться</a>
-                </p>
-            {{/content}}
-        {{/extend}}
-    {{/content}}
-{{/extend}}
+<div class="form-wrapper">
+  <form action="{{action}}" class="form">
+    <div class="form-header">
+      <h1 class="h1 ta-center">{{formTitle}}</h1>
+    </div>
+    <div class="form-content">
+      {{{TextInput placeholder="Логин" name="login" type="text"}}}
+      {{{TextInput placeholder="Пароль" name="password" type="password"}}}
+    </div>
+    <div class="form-footer">
+      <a href="{{submitLink}}" class="btn-primary">{{submitText}}</a>
+      <p class="ta-center">
+        <a href="../registration/registration.hbs" class="link-primary">Зарегистрироваться</a>
+      </p>
+    </div>
+  </form>
+</div>
