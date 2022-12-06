@@ -1,4 +1,4 @@
-const inputs = [
+export const inputs = [
   {
     type: 'email',
     placeholder: 'email@example.com',
@@ -42,5 +42,3 @@ const inputs = [
     disabled: true,
   },
 ];
-
-export default inputs;

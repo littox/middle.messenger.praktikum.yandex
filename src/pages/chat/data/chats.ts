@@ -1,4 +1,4 @@
-const chats = [
+export const chats = [
   {
     avatarUrl: 'https://picsum.photos/47/47',
     chatTitle: 'Андрей',
@@ -108,4 +108,3 @@ const chats = [
     active: false,
   },
 ];
-export default chats;

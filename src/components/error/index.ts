@@ -1,4 +1,4 @@
-import Component from '../../utils/Component';
+import { Component } from '../../utils/Component';
 import template from './error.hbs';
 
 export type ErrorProps = {
@@ -6,7 +6,7 @@ export type ErrorProps = {
   text: string;
 };
 
-export default class Error extends Component {
+export class Error extends Component {
   render(): DocumentFragment {
     return this.compile(template, { ...this.props });
   }

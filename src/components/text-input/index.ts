@@ -1,4 +1,4 @@
-import Component from '../../utils/Component';
+import { Component } from '../../utils/Component';
 import template from './text-input.hbs';
 
 export type TextInputProps = {
@@ -7,7 +7,7 @@ export type TextInputProps = {
   placeholder: string;
   events: Record<string, () => void>
 };
-export default class TextInput extends Component {
+export class TextInput extends Component {
   render(): DocumentFragment {
     return this.compile(template, { ...this.props });
   }
