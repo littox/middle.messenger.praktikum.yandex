@@ -47,7 +47,7 @@ export class Component<T extends Record<string, unknown> = any> {
     this.eventBus().emit(Component.EVENTS.FLOW_CDM);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(): boolean {
     return true;
   }
 

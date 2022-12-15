@@ -25,6 +25,9 @@
     "react/prop-types": [
       "off"
     ],
+    "react/no-unused-class-component-methods": [
+      "off"
+    ],
     "no-underscore-dangle": "off",
     "max-len": [
       "error",

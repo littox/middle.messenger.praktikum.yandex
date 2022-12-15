@@ -21,6 +21,10 @@ export class TextInput extends Component {
   }
 
   render(): DocumentFragment {
-    return this.compile(template, { ...this.props, value: this.getContent()?.querySelector('input')?.value });
+    const { props } = this;
+    return this.compile(template, {
+      ...props,
+      value: this.getContent()?.querySelector('input')?.value || props.value,
+    });
   }
 }

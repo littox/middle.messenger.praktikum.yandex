@@ -7,15 +7,17 @@ import { Component } from './utils/Component';
 import { ChatItem } from './pages/chat/components/chat-item';
 import { Chat, ChatProps } from './pages/chat';
 import { chats } from './pages/chat/data/chats';
-import { inputs } from './pages/profile/data/inputs';
 import { ProfileInput } from './pages/profile/components/input';
 import { Profile, ProfileProps } from './pages/profile';
-import { ValidationRuleNames, validator } from './utils/Validator';
+import { ValidationRuleNames } from './utils/Validator';
+import { onBlur } from './utils/validateInput';
+import { ProfileForm } from './pages/profile/components/form';
 
 registerComponent('TextInput', TextInput);
 registerComponent('BaseForm', BaseForm);
 registerComponent('ChatItem', ChatItem);
 registerComponent('ProfileInput', ProfileInput);
+registerComponent('ProfileForm', ProfileForm);
 
 const submitFn = function (event: Event) {
   event.preventDefault();
@@ -35,17 +37,6 @@ const submitFn = function (event: Event) {
   setTimeout(() => { window.location.assign('/chat'); }, 2000);
 };
 
-const onBlur = function (event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (input.tagName === 'INPUT') {
-    event.preventDefault();
-    const messages = validator.messages(input.value, [this.props.validation]);
-    this.setProps({
-      errors: messages,
-    });
-  }
-};
-
 type Routing = Record<string, () => Component>;
 
 const PAGES: Routing = {
@@ -58,7 +49,7 @@ const PAGES: Routing = {
     text: 'Мы уже фиксим',
   } as ErrorProps),
   '/chat': () => new Chat({ chats } as ChatProps),
-  '/profile': () => new Profile({ inputs } as ProfileProps),
+  '/profile': () => new Profile({ isActiveForm: false } as ProfileProps),
   '/registration': () => new Auth({
     form: new BaseForm({
       events: {
@@ -73,49 +64,70 @@ const PAGES: Routing = {
           type: 'text',
           placeholder: 'Почта',
           name: 'email',
-          events: {},
+          validation: ValidationRuleNames.email,
           errors: [],
+          events: {
+            focusout: onBlur,
+          },
         },
         {
           type: 'text',
           placeholder: 'Логин',
           name: 'login',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.login,
           errors: [],
         },
         {
           type: 'text',
           placeholder: 'Имя',
           name: 'first_name',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.name,
           errors: [],
         },
         {
           type: 'text',
           placeholder: 'Фамилия',
           name: 'second_name',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.name,
           errors: [],
         },
         {
           type: 'text',
           placeholder: 'Телефон',
           name: 'phone',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.phone,
           errors: [],
         },
         {
           type: 'password',
           placeholder: 'Пароль',
           name: 'password',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.password,
           errors: [],
         },
         {
           type: 'password',
           placeholder: 'Пароль (еще раз)',
           name: 'password_confirmation',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.password,
           errors: [],
         },
       ],
