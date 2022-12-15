@@ -16,6 +16,15 @@
     "import/prefer-default-export": [
       "off"
     ],
+    "react/no-unused-prop-types": [
+      "off"
+    ],
+    "react/require-default-props": [
+      "off"
+    ],
+    "react/prop-types": [
+      "off"
+    ],
     "no-underscore-dangle": "off",
     "max-len": [
       "error",
