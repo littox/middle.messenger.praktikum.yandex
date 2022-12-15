@@ -47,8 +47,7 @@ export class Component<T extends Record<string, unknown> = any> {
     this.eventBus().emit(Component.EVENTS.FLOW_CDM);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  componentDidUpdate(oldProps: Record<string, unknown>, newProps: Record<string, unknown>) {
+  componentDidUpdate() {
     return true;
   }
 
@@ -98,7 +97,7 @@ export class Component<T extends Record<string, unknown> = any> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected componentDidMount(oldProps?: T) {
+  protected componentDidMount() {
   }
 
   private registerEvents() {
@@ -109,11 +108,11 @@ export class Component<T extends Record<string, unknown> = any> {
   }
 
   private _componentDidMount() {
-    this.componentDidMount(this.props);
+    this.componentDidMount();
   }
 
-  private _componentDidUpdate(oldProps: Record<string, unknown>, newProps: Record<string, unknown>) {
-    const response = this.componentDidUpdate(oldProps, newProps);
+  private _componentDidUpdate() {
+    const response = this.componentDidUpdate();
     if (!response) {
       return;
     }
@@ -140,15 +139,25 @@ export class Component<T extends Record<string, unknown> = any> {
 
   private _render() {
     const block = this.render();
-    this._removeEvents();
     const newEl = block.firstElementChild as HTMLElement;
-    this._element?.replaceWith(newEl);
+
+    if (this._element) {
+      this._removeEvents();
+      this._element.replaceWith(newEl);
+    }
     this._element = newEl;
     this._addEvents();
   }
 
   private _removeEvents(): void {
-    this._element?.replaceWith(this._element?.cloneNode(true));
+    const events: Record<string, () => void> = (this.props as any).events;
+
+    if (!events || !this._element) {
+      return;
+    }
+    Object.entries(events).forEach(([event, listener]) => {
+      this._element!.removeEventListener(event, listener.bind(this));
+    });
   }
 
   private _addEvents(): void {
@@ -159,7 +168,7 @@ export class Component<T extends Record<string, unknown> = any> {
     }
 
     Object.entries(events).forEach(([eventName, listener]) => {
-      this._element?.addEventListener(eventName, listener);
+      this._element?.addEventListener(eventName, listener.bind(this));
     });
   }
 
@@ -171,10 +180,11 @@ export class Component<T extends Record<string, unknown> = any> {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set(target, prop: string, value) {
+        const oldProps = { ...target };
         // eslint-disable-next-line no-param-reassign
         target[prop as keyof T] = value;
 
-        self.eventBus().emit(Component.EVENTS.FLOW_CDU, { ...target }, target);
+        self.eventBus().emit(Component.EVENTS.FLOW_CDU, { ...oldProps }, target);
         return true;
       },
       deleteProperty() {
