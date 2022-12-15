@@ -1,8 +1,18 @@
 import { Component } from '../../utils/Component';
 import template from './chat.hbs';
 
+type ChatFields = {
+  avatarUrl?: string;
+  chatTitle: string;
+  from: string;
+  message: string;
+  unreadCount: number;
+  date: string;
+  active: boolean;
+};
+
 export type ChatProps = {
-  chats: Record<string, any>[];
+  chats: ChatFields[];
 };
 
 export class Chat extends Component {
