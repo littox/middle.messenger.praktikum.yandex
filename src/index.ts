@@ -10,17 +10,23 @@ import { chats } from './pages/chat/data/chats';
 import { inputs } from './pages/profile/data/inputs';
 import { ProfileInput } from './pages/profile/components/input';
 import { Profile, ProfileProps } from './pages/profile';
+import { ValidationRuleNames, validator } from './utils/Validator';
 
 registerComponent('TextInput', TextInput);
 registerComponent('BaseForm', BaseForm);
 registerComponent('ChatItem', ChatItem);
 registerComponent('ProfileInput', ProfileInput);
 
-const submitFn: (event: Event) => void = (event) => {
+const submitFn = function (event: Event) {
   event.preventDefault();
+  let isValid: boolean = true;
+  Object.values(this.children).forEach((component) => {
+    if (component instanceof TextInput) {
+      isValid = component.isValid() && isValid;
+    }
+  });
   const formData = new FormData(event.target as HTMLFormElement);
   const res: Record<string, unknown> = {};
-
   [...formData.entries()].forEach(([key, value]) => {
     res[key] = value;
   });
@@ -28,16 +34,15 @@ const submitFn: (event: Event) => void = (event) => {
 
   setTimeout(() => { window.location.assign('/chat'); }, 2000);
 };
-const focusinFn: (event: Event) => void = (event) => {
-  const el = event.target as Element;
-  if (el.tagName === 'INPUT') {
+
+const onBlur = function (event: Event) {
+  const input = event.target as HTMLInputElement;
+  if (input.tagName === 'INPUT') {
     event.preventDefault();
-  }
-};
-const focusoutFn: (event: Event) => void = (event) => {
-  const el = event.target as Element;
-  if (el.tagName === 'INPUT') {
-    event.preventDefault();
+    const messages = validator.messages(input.value, [this.props.validation]);
+    this.setProps({
+      errors: messages,
+    });
   }
 };
 
@@ -58,8 +63,6 @@ const PAGES: Routing = {
     form: new BaseForm({
       events: {
         submit: submitFn,
-        focusin: focusinFn,
-        focusout: focusoutFn,
       },
       action: '/',
       formTitle: 'Регистрация',
@@ -71,42 +74,49 @@ const PAGES: Routing = {
           placeholder: 'Почта',
           name: 'email',
           events: {},
+          errors: [],
         },
         {
           type: 'text',
           placeholder: 'Логин',
           name: 'login',
           events: {},
+          errors: [],
         },
         {
           type: 'text',
           placeholder: 'Имя',
           name: 'first_name',
           events: {},
+          errors: [],
         },
         {
           type: 'text',
           placeholder: 'Фамилия',
           name: 'second_name',
           events: {},
+          errors: [],
         },
         {
           type: 'text',
           placeholder: 'Телефон',
           name: 'phone',
           events: {},
+          errors: [],
         },
         {
           type: 'password',
           placeholder: 'Пароль',
           name: 'password',
           events: {},
+          errors: [],
         },
         {
           type: 'password',
           placeholder: 'Пароль (еще раз)',
           name: 'password_confirmation',
           events: {},
+          errors: [],
         },
       ],
       link: {
@@ -120,8 +130,6 @@ const PAGES: Routing = {
     form: new BaseForm({
       events: {
         submit: submitFn,
-        focusin: focusinFn,
-        focusout: focusoutFn,
       },
       action: '/',
       formTitle: 'Вход',
@@ -132,13 +140,21 @@ const PAGES: Routing = {
           type: 'text',
           placeholder: 'Логин',
           name: 'login',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          errors: [],
+          validation: ValidationRuleNames.login,
         },
         {
           type: 'password',
           placeholder: 'Пароль',
           name: 'password',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          errors: [],
+          validation: ValidationRuleNames.password,
         },
       ],
       link: {
