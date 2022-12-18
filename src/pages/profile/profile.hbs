@@ -10,22 +10,22 @@
       <div class="profile-name">
         Антон
       </div>
-      <form action="" class="profile-form">
-        {{#each inputs as |input|}}
-          {{{ProfileInput input=input}}}
-        {{/each}}
-      </form>
-      <div class="profile-actions">
-        <div class="profile-form-control">
-          <a href="#">Изменить данные</a>
+      {{{ProfileForm isActiveForm=isActiveForm}}}
+
+      {{#if isActiveForm}}
+      {{else}}
+        <div class="profile-actions">
+          <div class="profile-form-control">
+            <a href="" id="js-toggle-form">Изменить данные</a>
+          </div>
+          <div class="profile-form-control">
+            <a href="#">Изменить пароль</a>
+          </div>
+          <div class="profile-form-control">
+            <a href="/" class="red">Выйти</a>
+          </div>
         </div>
-        <div class="profile-form-control">
-          <a href="#">Изменить пароль</a>
-        </div>
-        <div class="profile-form-control">
-          <a href="/" class="red">Выйти</a>
-        </div>
-      </div>
+      {{/if}}
     </div>
   </div>
 </div>

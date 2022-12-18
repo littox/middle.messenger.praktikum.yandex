@@ -1,22 +1,45 @@
-import TextInput from './components/text-input';
-import Auth, { AuthProps } from './pages/auth';
-import registerComponent from './utils/registerComponent';
-import BaseForm, { BaseFormProps } from './components/base-form';
-import Error, { ErrorProps } from './components/error';
-import Component from './utils/Component';
-import ChatItem from './pages/chat/components/chat-item';
-import Chat, { ChatProps } from './pages/chat';
-import chats from './pages/chat/data/chats';
-import inputs from './pages/profile/data/inputs';
-import ProfileInput from './pages/profile/components/input';
-import Profile, { ProfileProps } from './pages/profile';
+import { TextInput } from './components/text-input';
+import { Auth, AuthProps } from './pages/auth';
+import { registerComponent } from './utils/registerComponent';
+import { BaseForm, BaseFormProps } from './components/base-form';
+import { Error, ErrorProps } from './components/error';
+import { Component } from './utils/Component';
+import { ChatItem } from './pages/chat/components/chat-item';
+import { Chat, ChatProps } from './pages/chat';
+import { chats } from './pages/chat/data/chats';
+import { ProfileInput } from './pages/profile/components/input';
+import { Profile, ProfileProps } from './pages/profile';
+import { ValidationRuleNames } from './utils/Validator';
+import { onBlur } from './utils/validateInput';
+import { ProfileForm } from './pages/profile/components/form';
 
 registerComponent('TextInput', TextInput);
 registerComponent('BaseForm', BaseForm);
 registerComponent('ChatItem', ChatItem);
 registerComponent('ProfileInput', ProfileInput);
+registerComponent('ProfileForm', ProfileForm);
 
-const PAGES = {
+const submitFn = function (event: Event) {
+  event.preventDefault();
+  let isValid: boolean = true;
+  Object.values(this.children).forEach((component) => {
+    if (component instanceof TextInput) {
+      isValid = component.isValid() && isValid;
+    }
+  });
+  const formData = new FormData(event.target as HTMLFormElement);
+  const res: Record<string, unknown> = {};
+  [...formData.entries()].forEach(([key, value]) => {
+    res[key] = value;
+  });
+  console.log(res);
+
+  setTimeout(() => { window.location.assign('/chat'); }, 2000);
+};
+
+type Routing = Record<string, () => Component>;
+
+const PAGES: Routing = {
   '/404': () => new Error({
     code: '404',
     text: 'Не туда попали',
@@ -26,33 +49,11 @@ const PAGES = {
     text: 'Мы уже фиксим',
   } as ErrorProps),
   '/chat': () => new Chat({ chats } as ChatProps),
-  '/profile': () => new Profile({ inputs } as ProfileProps),
+  '/profile': () => new Profile({ isActiveForm: false } as ProfileProps),
   '/registration': () => new Auth({
     form: new BaseForm({
       events: {
-        submit: (event) => {
-          event.preventDefault();
-          const formData = new FormData(event.target as HTMLFormElement);
-          const res = {};
-
-          // eslint-disable-next-line no-restricted-syntax
-          for (const [firstName, surname] of formData.entries()) {
-            res[firstName] = surname;
-          }
-
-          console.log(res);
-          setTimeout(() => { window.location = '/chat'; }, 2000);
-        },
-        focusin: (event) => {
-          if (event.target.tagName === 'INPUT') {
-            event.preventDefault();
-          }
-        },
-        focusout: (event) => {
-          if (event.target.tagName === 'INPUT') {
-            event.preventDefault();
-          }
-        },
+        submit: submitFn,
       },
       action: '/',
       formTitle: 'Регистрация',
@@ -63,43 +64,71 @@ const PAGES = {
           type: 'text',
           placeholder: 'Почта',
           name: 'email',
-          events: {},
+          validation: ValidationRuleNames.email,
+          errors: [],
+          events: {
+            focusout: onBlur,
+          },
         },
         {
           type: 'text',
           placeholder: 'Логин',
           name: 'login',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.login,
+          errors: [],
         },
         {
           type: 'text',
           placeholder: 'Имя',
           name: 'first_name',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.name,
+          errors: [],
         },
         {
           type: 'text',
           placeholder: 'Фамилия',
           name: 'second_name',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.name,
+          errors: [],
         },
         {
           type: 'text',
           placeholder: 'Телефон',
           name: 'phone',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.phone,
+          errors: [],
         },
         {
           type: 'password',
           placeholder: 'Пароль',
           name: 'password',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.password,
+          errors: [],
         },
         {
           type: 'password',
           placeholder: 'Пароль (еще раз)',
           name: 'password_confirmation',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          validation: ValidationRuleNames.password,
+          errors: [],
         },
       ],
       link: {
@@ -112,29 +141,7 @@ const PAGES = {
   '/': () => new Auth({
     form: new BaseForm({
       events: {
-        submit: (event) => {
-          event.preventDefault();
-          const formData = new FormData(event.target as HTMLFormElement);
-          const res = {};
-
-          // eslint-disable-next-line no-restricted-syntax
-          for (const [firstName, surname] of formData.entries()) {
-            res[firstName] = surname;
-          }
-
-          console.log(res);
-          setTimeout(() => { window.location = '/chat'; }, 2000);
-        },
-        focusin: (event) => {
-          if (event.target.tagName === 'INPUT') {
-            event.preventDefault();
-          }
-        },
-        focusout: (event) => {
-          if (event.target.tagName === 'INPUT') {
-            event.preventDefault();
-          }
-        },
+        submit: submitFn,
       },
       action: '/',
       formTitle: 'Вход',
@@ -145,13 +152,21 @@ const PAGES = {
           type: 'text',
           placeholder: 'Логин',
           name: 'login',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          errors: [],
+          validation: ValidationRuleNames.login,
         },
         {
           type: 'password',
           placeholder: 'Пароль',
           name: 'password',
-          events: {},
+          events: {
+            focusout: onBlur,
+          },
+          errors: [],
+          validation: ValidationRuleNames.password,
         },
       ],
       link: {
@@ -162,14 +177,14 @@ const PAGES = {
   } as AuthProps),
 };
 
-function renderPage(name): void {
+function renderPage(name: string): void {
   const root = document.getElementById('app');
   if (!PAGES[name]) {
-    window.location = '/404';
+    window.location.assign('/404');
   }
   const component: () => Component = PAGES[name];
 
-  root.append(component().getContent());
+  root?.append(component().getContent()!);
 }
 
 window.renderPage = renderPage;

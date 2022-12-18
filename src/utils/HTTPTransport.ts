@@ -1,4 +1,4 @@
-enum METHODS {
+enum Methods {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
@@ -8,10 +8,12 @@ enum METHODS {
 type Data = Record<string, string | number>;
 
 type Options = {
-  method: METHODS;
+  method: Methods;
   data?: Data;
-  headers?: unknown;
+  headers?: Record<string, string>;
+  timeout?: number;
 };
+type OptsWithNoMethod = Omit<Options, 'method'>;
 
 function queryStringify(data: Data) {
   if (typeof data !== 'object') {
@@ -22,21 +24,25 @@ function queryStringify(data: Data) {
   return keys.reduce((result, key, index) => `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`, '?');
 }
 
-export default class HTTPTransport {
-  get(url: string, options: Record<string, any> = {}):Promise<XMLHttpRequest> {
-    return this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+export class HTTPTransport {
+  get(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
+    return this.request(
+      options.data ? `${url}${queryStringify(options.data)}` : url,
+      { ...options, method: Methods.GET },
+      options.timeout,
+    );
   }
 
-  post(url: string, options: Record<string, any> = {}):Promise<XMLHttpRequest> {
-    return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+  post(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
+    return this.request(url, { ...options, method: Methods.POST }, options.timeout);
   }
 
-  put(url: string, options: Record<string, any> = {}):Promise<XMLHttpRequest> {
-    return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+  put(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
+    return this.request(url, { ...options, method: Methods.PUT }, options.timeout);
   }
 
-  delete(url: string, options: Record<string, any> = {}):Promise<XMLHttpRequest> {
-    return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+  delete(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
+    return this.request(url, { ...options, method: Methods.DELETE }, options.timeout);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -45,20 +51,13 @@ export default class HTTPTransport {
 
     return new Promise((resolve, reject) => {
       if (!method) {
-        // eslint-disable-next-line prefer-promise-reject-errors
-        reject('No method');
+        reject(new Error('No method'));
         return;
       }
 
       const xhr = new XMLHttpRequest();
-      const isGet = method === METHODS.GET;
 
-      xhr.open(
-        method,
-        isGet && !!data
-          ? `${url}${queryStringify(data)}`
-          : url,
-      );
+      xhr.open(method, url);
 
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
@@ -73,12 +72,11 @@ export default class HTTPTransport {
 
       xhr.timeout = timeout;
       xhr.ontimeout = reject;
-
+      const isGet = method === Methods.GET;
       if (isGet || !data) {
         xhr.send();
       } else {
-        // @ts-ignore
-        xhr.send(data);
+        xhr.send(JSON.stringify(data));
       }
     });
   }

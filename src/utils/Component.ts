@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
-import EventBus from './EventBus';
+import { EventBus } from './EventBus';
 
-export default class Component<T extends Record<string, unknown> = any> {
+export class Component<T extends Record<string, unknown> = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -17,8 +17,6 @@ export default class Component<T extends Record<string, unknown> = any> {
 
   private _element: HTMLElement | null = null;
 
-  private readonly meta: { props: any };
-
   private eventBus: () => EventBus;
 
   /** JSDoc
@@ -32,9 +30,6 @@ export default class Component<T extends Record<string, unknown> = any> {
     this.children = children;
 
     const eventBus = new EventBus();
-    this.meta = {
-      props,
-    };
 
     this.props = this.makePropsProxy(props);
 
@@ -52,8 +47,7 @@ export default class Component<T extends Record<string, unknown> = any> {
     this.eventBus().emit(Component.EVENTS.FLOW_CDM);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  componentDidUpdate(oldProps: Record<string, unknown>, newProps: Record<string, unknown>) {
+  componentDidUpdate(): boolean {
     return true;
   }
 
@@ -81,7 +75,7 @@ export default class Component<T extends Record<string, unknown> = any> {
       if (!stub) {
         return;
       }
-      stub.replaceWith(child.getContent());
+      stub.replaceWith(child.getContent()!);
     });
     return fragment.content;
   }
@@ -95,15 +89,15 @@ export default class Component<T extends Record<string, unknown> = any> {
   }
 
   show() {
-    this.getContent().style.display = 'block';
+    this.getContent()!.style.display = 'block';
   }
 
   hide() {
-    this.getContent().style.display = 'none';
+    this.getContent()!.style.display = 'none';
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected componentDidMount(oldProps?: T) {
+  protected componentDidMount() {
   }
 
   private registerEvents() {
@@ -114,11 +108,11 @@ export default class Component<T extends Record<string, unknown> = any> {
   }
 
   private _componentDidMount() {
-    this.componentDidMount(this.props);
+    this.componentDidMount();
   }
 
-  private _componentDidUpdate(oldProps: Record<string, unknown>, newProps: Record<string, unknown>) {
-    const response = this.componentDidUpdate(oldProps, newProps);
+  private _componentDidUpdate() {
+    const response = this.componentDidUpdate();
     if (!response) {
       return;
     }
@@ -126,39 +120,55 @@ export default class Component<T extends Record<string, unknown> = any> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private _getChildren(propsAndChildren: T) {
+  private _getChildren(propsAndChildren?: T) {
     const children: Record<string, Component> = {};
     const props: Record<string, unknown> = {};
 
-    Object.entries(propsAndChildren).forEach(([key, value]) => {
-      if (value instanceof Component) {
-        children[key] = value;
-      } else {
-        props[key] = value;
-      }
-    });
+    if (propsAndChildren) {
+      Object.entries(propsAndChildren).forEach(([key, value]) => {
+        if (value instanceof Component) {
+          children[key] = value;
+        } else {
+          props[key] = value;
+        }
+      });
+    }
 
     return { children, props: props as T };
   }
 
   private _render() {
     const block = this.render();
-    this._removeEvents();
     const newEl = block.firstElementChild as HTMLElement;
-    this._element?.replaceWith(newEl);
+
+    if (this._element) {
+      this._removeEvents();
+      this._element.replaceWith(newEl);
+    }
     this._element = newEl;
     this._addEvents();
   }
 
   private _removeEvents(): void {
-    this._element?.replaceWith(this._element?.cloneNode(true));
+    const events: Record<string, () => void> = (this.props as any).events;
+
+    if (!events || !this._element) {
+      return;
+    }
+    Object.entries(events).forEach(([event, listener]) => {
+      this._element!.removeEventListener(event, listener.bind(this));
+    });
   }
 
   private _addEvents(): void {
     const { events = {} } = this.props;
 
-    Object.keys(events).forEach((eventName) => {
-      this._element.addEventListener(eventName, events[eventName]);
+    if (!events) {
+      return;
+    }
+
+    Object.entries(events).forEach(([eventName, listener]) => {
+      this._element?.addEventListener(eventName, listener.bind(this));
     });
   }
 
@@ -170,10 +180,11 @@ export default class Component<T extends Record<string, unknown> = any> {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set(target, prop: string, value) {
+        const oldProps = { ...target };
         // eslint-disable-next-line no-param-reassign
         target[prop as keyof T] = value;
 
-        self.eventBus().emit(Component.EVENTS.FLOW_CDU, { ...target }, target);
+        self.eventBus().emit(Component.EVENTS.FLOW_CDU, { ...oldProps }, target);
         return true;
       },
       deleteProperty() {
