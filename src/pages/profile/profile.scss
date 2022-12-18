@@ -1,10 +1,12 @@
-
 .profile {
   @include flex-column;
+
   min-width: 520px;
 }
+
 .profile-nav {
   @include flex-row-all-center;
+
   height: 100%;
   background: $chat-list-bg;
   width: 65px;
@@ -13,20 +15,23 @@
 
 .profile-wrapper {
   @include flex-column;
+
   flex: 1;
   align-items: center;
-  padding: 50px 0 0 0;
+  padding: 50px 0 0;
   align-self: flex-start;
 }
-.profile-avatar{
+
+.profile-avatar {
   display: block;
   width: 130px;
   height: 130px;
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
   border-radius: 50%;
   align-self: center;
-  &:hover{
-    &:after{
+
+  &:hover {
+    &::after {
       content: "Поменять аватар";
       display: block;
       width: 130px;
@@ -34,9 +39,10 @@
     }
   }
 }
-.profile-name{
+
+.profile-name {
   font-size: 16px;
   font-weight: 600;
   text-align: center;
-  margin: 0 0 60px 0;
+  margin: 0 0 60px;
 }

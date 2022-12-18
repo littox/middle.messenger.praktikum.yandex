@@ -1,10 +1,11 @@
-
 .input-wrapper {
   display: flex;
   flex-flow: column-reverse;
+  margin-bottom: 20px;
 }
 
-.label, .input {
+.label,
+.input {
   transition: all 0.2s;
 }
 
@@ -13,7 +14,7 @@
   border: none;
   border-bottom: 1px solid $primary;
   padding: 6px 0 8px;
-  margin-bottom: 24px;
+  margin-bottom: 4px;
   outline: none;
   line-height: 13px;
 
@@ -33,7 +34,6 @@
     transform-origin: left bottom;
     transform: translate(0, calc(100% + 8px)) scale(1);
     line-height: 13px;
-
   }
 
   &:focus {
@@ -52,4 +52,8 @@
       color: $text-secondary;
     }
   }
+}
+.input-error {
+  font-size: 8px;
+  color: $error;
 }

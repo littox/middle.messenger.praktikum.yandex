@@ -9,6 +9,6 @@
   command = "npm run build"
   publish = "dist"
 [[redirects]]
-from = "/"
-to = "/auth.html"
-status = 200
+from="/*"
+to="/"
+status=200

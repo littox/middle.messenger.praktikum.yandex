@@ -1,0 +1,18 @@
+<form action="{{action}}" class="form">
+  <div class="form-header">
+    <h1 class="h1 ta-center">{{formTitle}}</h1>
+  </div>
+  <div class="form-content">
+    {{#each inputs as |input|}}
+      {{{TextInput placeholder=input.placeholder name=input.name type=input.type validation=input.validation events=input.events}}}
+    {{/each}}
+  </div>
+  <div class="form-footer">
+    <button type="submit" class="btn-primary">{{submitText}}</button>
+    {{#if link}}
+      <p class="ta-center">
+        <a href="{{link.url}}" class="link-primary">{{link.text}}</a>
+      </p>
+    {{/if}}
+  </div>
+</form>

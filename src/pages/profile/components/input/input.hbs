@@ -1,7 +1,11 @@
 <div class="profile-form-control">
-    <label for="{{input.name}}" class="label" class="profile-form-label">
-        {{input.placeholder}}
+    <label for="{{name}}" class="label" class="profile-form-label">
+        {{placeholder}}
     </label>
-    <input type="{{input.type}}" name="{{input.name}}" id="{{input.name}}" value="{{input.value}}"
-           class="profile-form-input" {{#if input.disabled}}disabled{{/if}}>
+    <input type="{{type}}" name="{{name}}" id="{{name}}" value="{{value}}"
+           class="profile-form-input" {{#unless disabled}}disabled{{/unless}}>
+
+  {{#each errors as |error|}}
+    <div class="input-error">{{ error }}</div>
+  {{/each}}
 </div>

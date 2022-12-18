@@ -1,15 +1,10 @@
-{{#extend "layout/main"}}
-    {{#content "page-content"}}
-        {{#extend "components/base-form/form" action="" submitLink="../index/index.hbs" submitText="Войти" formTitle="Вход"}}
-            {{#content "content"}}
-                {{>components/text-input/text-input placeholder="Логин" name="login" type="text"}}
-                {{>components/text-input/text-input placeholder="Пароль" name="password" type="password"}}
-            {{/content}}
-            {{#content "footer-content"}}
-                <p class="ta-center">
-                    <a href="../registration/registration.hbs" class="link-primary">Зарегистрироваться</a>
-                </p>
-            {{/content}}
-        {{/extend}}
-    {{/content}}
-{{/extend}}
+<div class="form-wrapper">
+{{{form}}}
+  <div style="display: none">
+    <a href="/profile" class="href">profile</a>
+    <a href="/404" class="href">404</a>
+    <a href="/500" class="href">500</a>
+    <a href="/chats" class="href">chats</a>
+    <a href="/registration" class="href">registration</a>
+  </div>
+</div>

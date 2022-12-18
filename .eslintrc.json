@@ -1,0 +1,37 @@
+{
+  "extends": [
+    "airbnb",
+    "airbnb-typescript"
+  ],
+  "ignorePatterns": [
+    "/dist/*",
+    "/node_modules/*"
+  ],
+  "parserOptions": {
+    "project": [
+      "tsconfig.json"
+    ]
+  },
+  "rules": {
+    "import/prefer-default-export": [
+      "off"
+    ],
+    "react/no-unused-prop-types": [
+      "off"
+    ],
+    "react/require-default-props": [
+      "off"
+    ],
+    "react/prop-types": [
+      "off"
+    ],
+    "react/no-unused-class-component-methods": [
+      "off"
+    ],
+    "no-underscore-dangle": "off",
+    "max-len": [
+      "error",
+      120
+    ]
+  }
+}

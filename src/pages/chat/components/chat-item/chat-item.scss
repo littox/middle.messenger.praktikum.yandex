@@ -1,0 +1,69 @@
+.chat-list-item {
+  padding: 0 10px;
+  margin: 0;
+  cursor: pointer;
+
+  &:hover {
+    background: $chat-item-hover-bg;
+  }
+
+  &__active {
+    background: $chat-item-active-bg;
+  }
+}
+
+.chat-item {
+  display: flex;
+  padding: 12px 0;
+  border-bottom: $chat-item-border;
+}
+
+.chat-item-avatar {
+  width: 47px;
+  height: 47px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.chat-title {
+  margin: 0 0 5px;
+  font-weight: 600;
+}
+
+.message-content {
+  margin: 0 10px 0 0;
+  font-size: 12px;
+  color: $text-secondary;
+}
+
+.message-from {
+  color: $text-primary;
+  font-weight: 600;
+}
+
+.chat-last-message {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.chat-last-message-info {
+  @include flex-column;
+
+  align-items: flex-end;
+}
+
+.message-date {
+  font-size: 9px;
+  color: $text-secondary;
+  margin: 0 0 15px;
+}
+
+.unread-counter {
+  @include flex-row-all-center;
+
+  width: 20px;
+  height: 20px;
+  background: $primary;
+  color: $white;
+  border-radius: 50%;
+}

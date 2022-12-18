@@ -1,0 +1,45 @@
+<div class="app-wrapper full-width">
+  <div class="chat-list-wrapper">
+    <nav class="chat-list-header">
+      <div class="chat-list-actions">
+        <a href="/profile" class="chat-profile-link">Профиль &#8250;</a>
+      </div>
+      <div class="chat-list-search">
+        <input type="text" name="search" id="search" class="search-input" placeholder="Поиск">
+      </div>
+    </nav>
+    <ul class="chat-list">
+      {{#each chats as |chat|}}
+        {{{ChatItem chat=chat}}}
+      {{/each}}
+    </ul>
+  </div>
+  <div class="chat-content-wrapper">
+    <div class="chat-header">
+      <div class="chat-avatar">
+        <img src="https://picsum.photos/47/47" alt="user_name">
+      </div>
+      <div class="chat-user">
+        Илья
+      </div>
+      <button class="chat-menu">
+        &#8230;
+      </button>
+    </div>
+    <div class="chat-content">
+      <p>
+        <a href="/404">404</a>
+      </p>
+      <p>
+        <a href="/500">500</a>
+      </p>
+      ТУТ БУДЕТ СОДЕРЖИМОЕ ЧАТА
+    </div>
+    <div class="message-panel">
+      <button class="message-attachment">&#128206;</button>
+      <input type="text" name="message" class="message-input" placeholder="Сообщение">
+      <button class="arrow-btn">&#11157;</button>
+    </div>
+  </div>
+
+</div>

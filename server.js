@@ -2,14 +2,14 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
 const distDir = path.join(__dirname, 'dist');
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(distDir, 'auth.html'));
-});
 app.use(express.static(`${__dirname}/dist/`));
 
-app.listen(PORT, function () {
+app.use('/', (req, res) => {
+  res.sendFile(path.join(distDir, 'index.html'));
+});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });

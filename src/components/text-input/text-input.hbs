@@ -1,4 +1,7 @@
 <div class="input-wrapper">
-    <input type="{{type}}" name="{{name}}" id="{{name}}" class="input" placeholder="{{placeholder}}">
+  {{#each errors as |error|}}
+    <div class="input-error">{{ error }}</div>
+  {{/each}}
+    <input type="{{type}}" name="{{name}}" id="{{name}}" class="input" placeholder="{{placeholder}}" value="{{value}}">
     <label for="{{name}}" class="label">{{placeholder}}</label>
 </div>
