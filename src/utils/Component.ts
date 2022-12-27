@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import { EventBus } from './EventBus';
 
-export class Component<T extends Record<string, unknown> = any> {
+export class Component<T extends Record<string, any> = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -39,7 +39,11 @@ export class Component<T extends Record<string, unknown> = any> {
     this.eventBus().emit(Component.EVENTS.INIT);
   }
 
-  init() {
+  protected init() {
+  }
+
+  private _init() {
+    this.init();
     this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
   }
 
@@ -101,7 +105,7 @@ export class Component<T extends Record<string, unknown> = any> {
   }
 
   private registerEvents() {
-    this.eventBus().on(Component.EVENTS.INIT, this.init.bind(this));
+    this.eventBus().on(Component.EVENTS.INIT, this._init.bind(this));
     this.eventBus().on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     this.eventBus().on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     this.eventBus().on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
@@ -161,7 +165,7 @@ export class Component<T extends Record<string, unknown> = any> {
   }
 
   private _addEvents(): void {
-    const { events = {} } = this.props;
+    const {events = {}} = this.props as T & { events: Record<string, () => void> };
 
     if (!events) {
       return;

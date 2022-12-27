@@ -4,15 +4,14 @@
   </div>
   <div class="form-content">
     {{#each inputs as |input|}}
-      {{{TextInput placeholder=input.placeholder name=input.name type=input.type validation=input.validation events=input.events}}}
+      {{{TextInput placeholder=input.placeholder name=input.name type=input.type validation=input.validation
+                   events=input.events}}}
     {{/each}}
   </div>
   <div class="form-footer">
     <button type="submit" class="btn-primary">{{submitText}}</button>
-    {{#if link}}
-      <p class="ta-center">
-        <a href="{{link.url}}" class="link-primary">{{link.text}}</a>
-      </p>
-    {{/if}}
+    <div class="ta-center">
+        {{{link}}}
+    </div>
   </div>
 </form>
