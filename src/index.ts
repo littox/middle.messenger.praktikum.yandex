@@ -12,6 +12,8 @@ import { Profile, ProfileProps } from './pages/profile';
 import { ProfileForm } from './pages/profile/components/form';
 import {router, Routes} from "./utils/Router";
 import {Registration} from "./pages/registration";
+import {Logout} from "./pages/logout";
+import AuthController from "./controllers/AuthController";
 
 registerComponent('TextInput', TextInput);
 registerComponent('BaseForm', BaseForm);
@@ -37,12 +39,35 @@ const PAGES: Routing = {
 window.addEventListener('DOMContentLoaded', async () => {
   router
     .use(Routes.Index, Auth)
+    .use(Routes.Logout, Logout)
     .use(Routes.Registration, Registration)
     .use(Routes.Profile, Profile)
     .use(Routes.Chat, Chat)
     .use(Routes.NotFound, Error)
     .use(Routes.Error, Error)
 
-  router.start();
+  let isProtectedRoute = true;
+  switch (window.location.pathname) {
+    case Routes.Index:
+    case Routes.Registration:
+      isProtectedRoute = false;
+      break;
+  }
+
+  try {
+    await AuthController.fetchUser();
+
+    router.start();
+
+    if (!isProtectedRoute) {
+      router.go(Routes.Profile)
+    }
+  } catch (e) {
+    router.start();
+
+    if (isProtectedRoute) {
+      router.go(Routes.Index);
+    }
+  }
 
 });

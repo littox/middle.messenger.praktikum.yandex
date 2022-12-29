@@ -3,9 +3,10 @@ import {Component} from './Component';
 export enum Routes {
   NotFound = '/404',
   Error = '/500',
-  Chat = '/chat',
-  Profile = '/profile',
-  Registration = '/registration',
+  Chat = '/messenger',
+  Profile = '/settings',
+  Registration = '/sign-up',
+  Logout = '/logout',
   Index = '/',
 }
 

@@ -5,7 +5,7 @@ import {Link} from "../link";
 
 export type BaseFormProps = {
   events?: Record<string, EventListener>
-  action: string;
+  action: (data: object) => void;
   formTitle: string;
   submitLink: string;
   submitText: string;
@@ -13,9 +13,9 @@ export type BaseFormProps = {
   link?: typeof Link;
 };
 
-export class BaseForm extends Component {
+export class BaseForm extends Component<BaseFormProps> {
 
-  constructor(propsAndChildren: any) {
+  constructor(propsAndChildren: BaseFormProps) {
     super({
       ...propsAndChildren, events: {
         submit: (event: Event) => {
@@ -31,18 +31,11 @@ export class BaseForm extends Component {
           [...formData.entries()].forEach(([key, value]) => {
             res[key] = value;
           });
-          console.log(res);
-
-          setTimeout(() => {
-            window.location.assign('/chat');
-          }, 2000);
+          this.props.action(res);
         }
       }
     });
-    // this.props.
   }
-
-  // submitFn
 
   render(): DocumentFragment {
     return this.compile(template, {...this.props, children: this.children});

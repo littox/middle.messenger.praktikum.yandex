@@ -3,7 +3,7 @@ import { TextInput, TextInputProps } from '../../../../components/text-input';
 
 export type ProfileInputProps = { disabled: boolean } & TextInputProps;
 export class ProfileInput extends TextInput {
-  constructor(propsAndChildren: any) {
+  constructor(propsAndChildren: ProfileInputProps) {
     super({ ...propsAndChildren });
   }
 

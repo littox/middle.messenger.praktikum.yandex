@@ -1,11 +1,22 @@
 import template from './profile.hbs';
 import { Component } from '../../utils/Component';
+import {Link} from "../../components/link";
+import {Routes} from "../../utils/Router";
 
 export type ProfileProps = {
   isActiveForm: boolean;
 };
 
 export class Profile extends Component {
+
+  init() {
+    this.children.logout = new Link({
+      text: 'Выйти',
+      styles: 'red',
+      url: Routes.Logout
+    })
+  }
+
   onFormActiveToggle(e: Event): void {
     e.preventDefault();
     this.props.isActiveForm = true;
@@ -18,3 +29,7 @@ export class Profile extends Component {
     return block;
   }
 }
+
+// const withUser = withStore((state) => ({ ...state.user }))
+//
+// export const ProfilePage = withUser(Profile);

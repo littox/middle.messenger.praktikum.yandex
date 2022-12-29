@@ -25,28 +25,28 @@ function queryStringify(data: Data) {
 }
 
 export class HTTPTransport {
-  get(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
-    return this.request(
+  get<Response>(url: string, options: OptsWithNoMethod = {}):Promise<Response> {
+    return this.request<Response>(
       options.data ? `${url}${queryStringify(options.data)}` : url,
       { ...options, method: Methods.GET },
       options.timeout,
     );
   }
 
-  post(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
-    return this.request(url, { ...options, method: Methods.POST }, options.timeout);
+  post<Response = void>(url: string, options: OptsWithNoMethod = {}):Promise<Response> {
+    return this.request<Response>(url, { ...options, method: Methods.POST }, options.timeout);
   }
 
-  put(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
-    return this.request(url, { ...options, method: Methods.PUT }, options.timeout);
+  put<Response = void>(url: string, options: OptsWithNoMethod = {}):Promise<Response> {
+    return this.request<Response>(url, { ...options, method: Methods.PUT }, options.timeout);
   }
 
-  delete(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
-    return this.request(url, { ...options, method: Methods.DELETE }, options.timeout);
+  delete<Response>(url: string, options: OptsWithNoMethod = {}):Promise<Response> {
+    return this.request<Response>(url, { ...options, method: Methods.DELETE }, options.timeout);
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private request(url: string, options: Options, timeout = 5000): Promise<XMLHttpRequest> {
+  private request<Response = void>(url: string, options: Options, timeout = 5000): Promise<Response> {
     const { headers = {}, method, data } = options;
 
     return new Promise((resolve, reject) => {
@@ -62,9 +62,8 @@ export class HTTPTransport {
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
-
       xhr.onload = () => {
-        resolve(xhr);
+        resolve(xhr.response);
       };
 
       xhr.onabort = reject;
@@ -72,6 +71,10 @@ export class HTTPTransport {
 
       xhr.timeout = timeout;
       xhr.ontimeout = reject;
+
+      xhr.withCredentials = true;
+      xhr.responseType = 'json';
+
       const isGet = method === Methods.GET;
       if (isGet || !data) {
         xhr.send();

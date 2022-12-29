@@ -5,12 +5,14 @@ import {onBlur} from "../../utils/validateInput";
 import {ValidationRuleNames} from "../../utils/Validator";
 import {Link} from "../../components/link";
 import {Routes} from "../../utils/Router";
+import {SigninData} from "../../api/AuthAPI";
+import AuthController from "../../controllers/AuthController";
 
 export class Auth extends Component {
 
   init() {
     this.children.form = new BaseForm({
-      action: '/',
+      action: (data: object) => AuthController.signin(data as SigninData),
       formTitle: 'Вход',
       submitLink: '/',
       submitText: 'Войти',

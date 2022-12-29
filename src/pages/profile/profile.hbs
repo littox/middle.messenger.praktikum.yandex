@@ -7,9 +7,7 @@
   <div class="profile-wrapper">
     <div class="profile">
       <img src="https://picsum.photos/130/130" alt="user_name" class="profile-avatar">
-      <div class="profile-name">
-        Антон
-      </div>
+
       {{{ProfileForm isActiveForm=isActiveForm}}}
 
       {{#if isActiveForm}}
@@ -22,7 +20,7 @@
             <a href="#">Изменить пароль</a>
           </div>
           <div class="profile-form-control">
-            <a href="/" class="red">Выйти</a>
+            {{{logout}}}
           </div>
         </div>
       {{/if}}
