@@ -31,7 +31,10 @@ export class BaseForm extends Component<BaseFormProps> {
           [...formData.entries()].forEach(([key, value]) => {
             res[key] = value;
           });
-          this.props.action(res);
+
+          if (isValid) {
+            this.props.action(res);
+          }
         }
       }
     });

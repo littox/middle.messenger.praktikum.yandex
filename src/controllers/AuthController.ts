@@ -1,4 +1,4 @@
-import { AuthAPI, SigninData, SignupData } from '../api/AuthAPI';
+import {AuthAPI, AuthApiInstance, SigninData, SignupData} from '../api/AuthAPI';
 import store from '../utils/Store';
 import {router, Routes} from '../utils/Router';
 
@@ -30,7 +30,6 @@ export class AuthController {
   }
 
   async fetchUser() {
-    console.log("fetchUser")
     const user = await this.api.read();
 
     store.set('user', user);
@@ -47,4 +46,4 @@ export class AuthController {
   }
 }
 
-export default new AuthController(new AuthAPI());
+export default new AuthController(AuthApiInstance);

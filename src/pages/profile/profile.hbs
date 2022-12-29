@@ -7,23 +7,26 @@
   <div class="profile-wrapper">
     <div class="profile">
       <img src="https://picsum.photos/130/130" alt="user_name" class="profile-avatar">
+      <div class="profile-form">
+        {{{ProfileInfoItem name="E-mail" value=user.email}}}
+        {{{ProfileInfoItem name="Логин" value=user.login}}}
+        {{{ProfileInfoItem name="Имя" value=user.first_name}}}
+        {{{ProfileInfoItem name="Фамилия" value=user.second_name}}}
+        {{{ProfileInfoItem name="Имя в чате" value=user.display_name}}}
+        {{{ProfileInfoItem name="Телефон" value=user.phone}}}
+      </div>
 
-      {{{ProfileForm isActiveForm=isActiveForm}}}
-
-      {{#if isActiveForm}}
-      {{else}}
-        <div class="profile-actions">
-          <div class="profile-form-control">
-            <a href="" id="js-toggle-form">Изменить данные</a>
-          </div>
-          <div class="profile-form-control">
-            <a href="#">Изменить пароль</a>
-          </div>
-          <div class="profile-form-control">
-            {{{logout}}}
-          </div>
+      <div class="profile-actions">
+        <div class="profile-form-control">
+          {{{changeProfile}}}
         </div>
-      {{/if}}
+        <div class="profile-form-control">
+          {{{changePassword}}}
+        </div>
+        <div class="profile-form-control">
+          {{{logout}}}
+        </div>
+      </div>
     </div>
   </div>
 </div>

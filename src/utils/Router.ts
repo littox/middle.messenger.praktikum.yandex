@@ -5,6 +5,8 @@ export enum Routes {
   Error = '/500',
   Chat = '/messenger',
   Profile = '/settings',
+  ProfilEdit = '/settings-edit',
+  PasswordEdit = '/settings-edit-password',
   Registration = '/sign-up',
   Logout = '/logout',
   Index = '/',

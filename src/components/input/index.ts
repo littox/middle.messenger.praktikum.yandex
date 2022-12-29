@@ -1,7 +1,7 @@
 import template from './input.hbs';
-import { TextInput, TextInputProps } from '../../../../components/text-input';
+import { TextInput, TextInputProps } from '../text-input';
 
-export type ProfileInputProps = { disabled: boolean } & TextInputProps;
+export type ProfileInputProps = TextInputProps;
 export class ProfileInput extends TextInput {
   constructor(propsAndChildren: ProfileInputProps) {
     super({ ...propsAndChildren });

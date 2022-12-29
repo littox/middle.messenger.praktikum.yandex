@@ -1,15 +1,15 @@
 import template from './form.hbs';
 import { Component } from '../../../../utils/Component';
-import { ProfileInput } from '../input';
+import { ProfileInput } from '../../../../components/input';
 import {ValidationRuleNames} from "../../../../utils/Validator";
 import {onBlur} from "../../../../utils/validateInput";
 import {withStore} from "../../../../hocs/withStore";
-import {User} from "../../../../api/AuthAPI";
+import {User, UserInfo} from "../../../../api/data/User";
+import ProfileController from "../../../../controllers/ProfileController";
 
 export interface ProfileFormProps {
   user: User;
   events: Record<string, EventListener>;
-  isActiveForm: boolean;
 }
 
 export class ProfileFormBase extends Component<ProfileFormProps> {
@@ -18,17 +18,31 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
     this.props.events = { submit: this.onSubmit };
   }
 
+  onSubmit(e: Event): void {
+    e.preventDefault();
+    let isValid: boolean = true;
+    const isProfileInputs = (component: Component): component is ProfileInput => component instanceof ProfileInput;
+    const profileInputs: ProfileInput[] = Object.values(this.children).filter(isProfileInputs);
+    profileInputs.forEach((component) => {
+      isValid = component.isValid() && isValid;
+    });
+    const formData = new FormData(e.target as HTMLFormElement);
+    const res: Record<string, any> = {};
+    [...formData.entries()].forEach(([key, value]) => {
+      res[key] = value;
+    });
+    if (isValid) {
+      ProfileController.updateProfile(res as UserInfo);
+    }
+  }
+
   protected init() {
-    console.log(this.props)
-    console.log(this.props.user)
-    console.log(this.props.user.email)
     this.children.email = new ProfileInput(
       {
         type: 'email',
         placeholder: 'email@example.com',
         name: 'email',
         value: this.props.user?.email,
-        disabled: !this.props.isActiveForm,
         validation: ValidationRuleNames.email,
         errors: [],
         events: {
@@ -42,7 +56,6 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         name: 'login',
         value: this.props.user?.login,
         validation: ValidationRuleNames.login,
-        disabled: !this.props.isActiveForm,
         errors: [],
         events: {
           focusout: onBlur,
@@ -54,8 +67,7 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         placeholder: 'Имя',
         name: 'first_name',
         value: this.props.user?.first_name,
-        validation: ValidationRuleNames.login,
-        disabled: !this.props.isActiveForm,
+        validation: ValidationRuleNames.name,
         errors: [],
         events: {
           focusout: onBlur,
@@ -67,8 +79,7 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         placeholder: 'Фамилия',
         name: 'second_name',
         value: this.props.user?.second_name,
-        validation: ValidationRuleNames.login,
-        disabled: !this.props.isActiveForm,
+        validation: ValidationRuleNames.name,
         errors: [],
         events: {
           focusout: onBlur,
@@ -80,8 +91,7 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         placeholder: 'Имя в чате',
         name: 'display_name',
         value: this.props.user?.display_name,
-        validation: ValidationRuleNames.login,
-        disabled: !this.props.isActiveForm,
+        validation: ValidationRuleNames.name,
         errors: [],
         events: {
           focusout: onBlur,
@@ -91,36 +101,15 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
       {
         type: 'text',
         placeholder: 'Телефон',
-        name: 'display_name',
+        name: 'phone',
         value: this.props.user?.phone,
-        validation: ValidationRuleNames.login,
-        disabled: !this.props.isActiveForm,
+        validation: ValidationRuleNames.phone,
         errors: [],
         events: {
           focusout: onBlur,
         },
       });
 
-  }
-
-  //
-  onSubmit(e: Event): void {
-    e.preventDefault();
-    let isValid: boolean = true;
-    const isProfileInputs = (component: Component): component is ProfileInput => component instanceof ProfileInput;
-    const profileInputs: ProfileInput[] = Object.values(this.children).filter(isProfileInputs);
-    profileInputs.forEach((component) => {
-      isValid = component.isValid() && isValid;
-    });
-    const formData = new FormData(e.target as HTMLFormElement);
-    const res: Record<string, unknown> = {};
-    [...formData.entries()].forEach(([key, value]) => {
-      res[key] = value;
-    });
-    console.log(res);
-    setTimeout(() => {
-      window.location.assign('/profile');
-    }, 2000);
   }
 
   render(): DocumentFragment {

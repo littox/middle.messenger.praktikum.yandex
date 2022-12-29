@@ -7,19 +7,25 @@ import { Component } from './utils/Component';
 import { ChatItem } from './pages/chat/components/chat-item';
 import { Chat, ChatProps } from './pages/chat';
 import { chats } from './pages/chat/data/chats';
-import { ProfileInput } from './pages/profile/components/input';
-import { Profile, ProfileProps } from './pages/profile';
-import { ProfileForm } from './pages/profile/components/form';
+import { ProfileInput } from './components/input';
+import {Profile, ProfilePage, ProfileProps} from './pages/profile';
+import { ProfileForm } from './pages/profile-edit/components/form';
 import {router, Routes} from "./utils/Router";
 import {Registration} from "./pages/registration";
 import {Logout} from "./pages/logout";
 import AuthController from "./controllers/AuthController";
+import {ProfileInfoItem} from "./pages/profile/components/info-item";
+import {ProfileEdit} from "./pages/profile-edit";
+import {ChangePasswordForm} from "./pages/password-edit/components/form";
+import {PasswordEdit} from "./pages/password-edit";
 
 registerComponent('TextInput', TextInput);
+registerComponent('ProfileInfoItem', ProfileInfoItem);
 registerComponent('BaseForm', BaseForm);
 registerComponent('ChatItem', ChatItem);
 registerComponent('ProfileInput', ProfileInput);
 registerComponent('ProfileForm', ProfileForm);
+registerComponent('ChangePasswordForm', ChangePasswordForm);
 
 type Routing = Record<string, () => Component>;
 
@@ -41,12 +47,15 @@ window.addEventListener('DOMContentLoaded', async () => {
     .use(Routes.Index, Auth)
     .use(Routes.Logout, Logout)
     .use(Routes.Registration, Registration)
-    .use(Routes.Profile, Profile)
+    .use(Routes.Profile, ProfilePage)
+    .use(Routes.ProfilEdit, ProfileEdit)
+    .use(Routes.PasswordEdit, PasswordEdit)
     .use(Routes.Chat, Chat)
     .use(Routes.NotFound, Error)
     .use(Routes.Error, Error)
 
   let isProtectedRoute = true;
+
   switch (window.location.pathname) {
     case Routes.Index:
     case Routes.Registration:
