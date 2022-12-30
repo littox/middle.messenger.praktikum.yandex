@@ -5,17 +5,16 @@ enum Methods {
   DELETE = 'DELETE',
 }
 
-type Data = Record<string, string | number>;
 
 type Options = {
   method: Methods;
-  data?: Data;
+  data?: any;
   headers?: Record<string, string>;
   timeout?: number;
 };
 type OptsWithNoMethod = Omit<Options, 'method'>;
 
-function queryStringify(data: Data) {
+function queryStringify(data: any) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
   }
@@ -62,6 +61,7 @@ export class HTTPTransport {
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
+
       xhr.onload = () => {
         resolve(xhr.response);
       };
@@ -78,8 +78,10 @@ export class HTTPTransport {
       const isGet = method === Methods.GET;
       if (isGet || !data) {
         xhr.send();
-      } else {
+      } else if(headers['Content-Type'] === 'application/json') {
         xhr.send(JSON.stringify(data));
+      } else {
+        xhr.send(data);
       }
     });
   }

@@ -12,17 +12,15 @@ export class UserAPI extends BaseAPI {
             'Content-Type': 'application/json'
           }, data: {...data}});
     }
-    changePassword(data: UserPassword): Promise<unknown> {
+    updatePassword(data: UserPassword): Promise<unknown> {
         return this.http.put(`${UserAPI.BASE_URL}/password`, {headers: {
             'Content-Type': 'application/json'
           }, data: {...data}});
     }
-    // changeAvatar(data: FormData): Promise<unknown> {
-    //     return this.http.put(`${UserAPI.BASE_URL}/profile/avatar`, {headers: {
-    //         'Content-Type': 'application/json'
-    //       }, data: {...data}});
-    // }
-    //
+    updateAvatar(data: FormData): Promise<unknown> {
+        return this.http.put(`${UserAPI.BASE_URL}/profile/avatar`, {data: data});
+    }
+
 
     read(id: string): Promise<User> {
         return this.http.get(`${UserAPI.BASE_URL}/${id}`);

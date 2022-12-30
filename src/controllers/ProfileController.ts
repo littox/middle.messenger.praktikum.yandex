@@ -22,8 +22,17 @@ export class ProfileController {
 
   async updatePassword(data: UserPassword) {
     try {
-      await this.api.changePassword(data);
+      await this.api.updatePassword(data);
       router.go(Routes.Profile);
+    } catch (e: any) {
+      console.error(e);
+    }
+  }
+
+  async updateAvatar(data: FormData) {
+    try {
+      const user = await this.api.updateAvatar(data);
+      store.set('user', user);
     } catch (e: any) {
       console.error(e);
     }

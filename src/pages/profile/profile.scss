@@ -1,6 +1,5 @@
 .profile {
   @include flex-column;
-
   min-width: 520px;
 }
 
@@ -21,7 +20,17 @@
   padding: 50px 0 0;
   align-self: flex-start;
 }
-
+.profile-avatar-label {
+  @include flex-row-all-center;
+  width: 130px;
+  height: 130px;
+  cursor: pointer;
+  border-radius: 50%;
+  &:hover {
+    background-color: $input-bg-secondary;
+    opacity: 0.5;
+  }
+}
 .profile-avatar {
   display: block;
   width: 130px;
@@ -29,15 +38,7 @@
   margin: 0 0 20px;
   border-radius: 50%;
   align-self: center;
-
-  &:hover {
-    &::after {
-      content: "Поменять аватар";
-      display: block;
-      width: 130px;
-      height: 130px;
-    }
-  }
+  background-color: $text-secondary;
 }
 
 .profile-name {

@@ -18,6 +18,8 @@ import {ProfileInfoItem} from "./pages/profile/components/info-item";
 import {ProfileEdit} from "./pages/profile-edit";
 import {ChangePasswordForm} from "./pages/password-edit/components/form";
 import {PasswordEdit} from "./pages/password-edit";
+import {AvatarForm} from "./components/avatar-form";
+import {PrevLink} from "./components/prev-link";
 
 registerComponent('TextInput', TextInput);
 registerComponent('ProfileInfoItem', ProfileInfoItem);
@@ -26,6 +28,8 @@ registerComponent('ChatItem', ChatItem);
 registerComponent('ProfileInput', ProfileInput);
 registerComponent('ProfileForm', ProfileForm);
 registerComponent('ChangePasswordForm', ChangePasswordForm);
+registerComponent('AvatarForm', AvatarForm);
+registerComponent('PrevLink', PrevLink);
 
 type Routing = Record<string, () => Component>;
 
