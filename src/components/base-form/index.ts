@@ -6,8 +6,7 @@ import {Link} from "../link";
 export type BaseFormProps = {
   events?: Record<string, EventListener>
   action: (data: object) => void;
-  formTitle: string;
-  submitLink: string;
+  formTitle?: string;
   submitText: string;
   inputs: TextInputProps[];
   link?: typeof Link;
@@ -31,7 +30,6 @@ export class BaseForm extends Component<BaseFormProps> {
           [...formData.entries()].forEach(([key, value]) => {
             res[key] = value;
           });
-
           if (isValid) {
             this.props.action(res);
           }

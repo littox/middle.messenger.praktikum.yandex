@@ -14,7 +14,6 @@ export class Auth extends Component {
     this.children.form = new BaseForm({
       action: (data: object) => AuthController.signin(data as SigninData),
       formTitle: 'Вход',
-      submitLink: '/',
       submitText: 'Войти',
       inputs: [
         {

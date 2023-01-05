@@ -13,7 +13,6 @@ export class Registration extends Component {
     this.children.form = new BaseForm({
       action: (data: object) => AuthController.signup(data as SignupData),
       formTitle: 'Регистрация',
-      submitLink: '/',
       submitText: 'Зарегистрироваться',
       inputs: [
         {

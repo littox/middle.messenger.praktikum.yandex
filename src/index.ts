@@ -5,8 +5,7 @@ import { BaseForm } from './components/base-form';
 import { Error, ErrorProps } from './components/error';
 import { Component } from './utils/Component';
 import { ChatItem } from './pages/chat/components/chat-item';
-import { Chat, ChatProps } from './pages/chat';
-import { chats } from './pages/chat/data/chats';
+import { Chats} from './pages/chat';
 import { ProfileInput } from './components/input';
 import {Profile, ProfilePage, ProfileProps} from './pages/profile';
 import { ProfileForm } from './pages/profile-edit/components/form';
@@ -20,6 +19,7 @@ import {ChangePasswordForm} from "./pages/password-edit/components/form";
 import {PasswordEdit} from "./pages/password-edit";
 import {AvatarForm} from "./components/avatar-form";
 import {PrevLink} from "./components/prev-link";
+import ChatsController from "./controllers/ChatsController";
 
 registerComponent('TextInput', TextInput);
 registerComponent('ProfileInfoItem', ProfileInfoItem);
@@ -42,7 +42,7 @@ const PAGES: Routing = {
     code: '500',
     text: 'Мы уже фиксим',
   } as ErrorProps),
-  '/chat': () => new Chat({ chats } as ChatProps),
+  // '/chat': () => new ChatBase({ chats } as ChatProps),
   '/profile': () => new Profile({ isActiveForm: false } as ProfileProps),
 };
 
@@ -54,7 +54,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     .use(Routes.Profile, ProfilePage)
     .use(Routes.ProfilEdit, ProfileEdit)
     .use(Routes.PasswordEdit, PasswordEdit)
-    .use(Routes.Chat, Chat)
+    .use(Routes.Chat, Chats)
     .use(Routes.NotFound, Error)
     .use(Routes.Error, Error)
 
@@ -69,7 +69,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   try {
     await AuthController.fetchUser();
-
+    await ChatsController.fetchChats()
     router.start();
 
     if (!isProtectedRoute) {
