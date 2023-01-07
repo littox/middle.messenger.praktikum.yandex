@@ -1,6 +1,7 @@
 import { ChatsAPI } from '../api/ChatsAPI';
 import store from '../utils/Store';
-import {CreateChatData} from "../api/data/Chats";
+import {AddUserToChatData, CreateChatData} from "../api/data/Chats";
+import MessagesController from "./MessagesController";
 
 class ChatsController {
   private readonly api: ChatsAPI;
@@ -12,17 +13,34 @@ class ChatsController {
   async create(data: CreateChatData) {
     await this.api.create(data);
 
-    this.fetchChats();
+    await this.fetchChats();
   }
 
   async fetchChats() {
     const chats = await this.api.read();
 
+    let promises = chats.map(async (chat) => {
+      const token = await this.getToken(chat.id);
+
+      return MessagesController.connect(chat.id, token);
+    });
+    await Promise.all(promises);
+
     store.set('chats', chats);
   }
 
-  addUserToChat(id: number, userId: number) {
-    this.api.addUsers(id, [userId]);
+  async addUserToChat(data: AddUserToChatData) {
+    await this.api.addUsers(data);
+  }
+
+  async deleteUsers(data: AddUserToChatData) {
+    try {
+      await this.api.deleteUsers(data);
+      let res = await this.api.getUsers(data.chatId)
+      store.set('selectedChatUsers',  res);
+    } catch (e: any) {
+      console.log('Ошибка удаления пользователя:', e);
+    }
   }
 
   async delete(id: number) {
@@ -35,8 +53,10 @@ class ChatsController {
     return this.api.getToken(id);
   }
 
-  selectChat(chatId: number) {
+  async selectChat(chatId: number) {
     store.set('selectedChat',  chatId);
+    let res = await this.api.getUsers(chatId)
+    store.set('selectedChatUsers',  res);
   }
 }
 

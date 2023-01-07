@@ -5,13 +5,6 @@ import ChatsController from "../../../../controllers/ChatsController";
 import {CreateChatData} from "../../../../api/data/Chats";
 
 export class NewChat extends Component {
-
-
-  constructor(propsAndChildren: any) {
-    super(propsAndChildren);
-    this.showModal()
-  }
-
   init() {
     this.children.form = new BaseForm({
       action: (data: object) => this.onChatAdd(data),
@@ -26,6 +19,11 @@ export class NewChat extends Component {
         },
       ],
     })
+  }
+
+
+  protected addCustomEvents() {
+    this.showModal();
   }
 
   showModal() {

@@ -1,7 +1,7 @@
 {
   "name": "m1",
   "scripts": {
-    "dev": "parcel src/index.html  --no-cache",
+    "dev": "parcel src/index.html  --no-cache --port 3001",
     "build": "parcel build src/index.html",
     "start": "npm run build && node server.js"
   },

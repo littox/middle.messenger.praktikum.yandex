@@ -1,6 +1,6 @@
 import BaseAPI from './BaseAPI';
 import {User} from "./data/User";
-import {ChatInfo, CreateChatData} from "./data/Chats";
+import {AddUserToChatData, ChatInfo, CreateChatData} from "./data/Chats";
 
 
 export class ChatsAPI extends BaseAPI {
@@ -29,10 +29,16 @@ export class ChatsAPI extends BaseAPI {
       }})
   }
 
-  addUsers(id: number, users: number[]): Promise<unknown> {
+  addUsers(data: AddUserToChatData): Promise<unknown> {
     return this.http.put(`${ChatsAPI.BASE_URL}/users`, {headers: {
         'Content-Type': 'application/json'
-      }, data: { users, chatId: id }});
+      }, data: { ...data }});
+  }
+
+  deleteUsers(data: AddUserToChatData): Promise<unknown> {
+    return this.http.delete(`${ChatsAPI.BASE_URL}/users`, {headers: {
+        'Content-Type': 'application/json'
+      }, data: { ...data }});
   }
 
   async getToken(id: number): Promise<string> {

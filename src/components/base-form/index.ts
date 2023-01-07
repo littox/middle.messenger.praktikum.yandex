@@ -1,7 +1,7 @@
 import {Component} from '../../utils/Component';
 import template from './base-form.hbs';
 import {TextInput, TextInputProps} from '../text-input';
-import {Link} from "../link";
+import {BaseLink} from "../link";
 
 export type BaseFormProps = {
   events?: Record<string, EventListener>
@@ -9,7 +9,7 @@ export type BaseFormProps = {
   formTitle?: string;
   submitText: string;
   inputs: TextInputProps[];
-  link?: typeof Link;
+  link?: BaseLink;
 };
 
 export class BaseForm extends Component<BaseFormProps> {
@@ -31,7 +31,7 @@ export class BaseForm extends Component<BaseFormProps> {
             res[key] = value;
           });
           if (isValid) {
-            this.props.action(res);
+              this.props.action(res);
           }
         }
       }

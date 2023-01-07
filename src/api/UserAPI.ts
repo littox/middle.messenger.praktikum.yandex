@@ -1,5 +1,5 @@
 import BaseAPI from "./BaseAPI";
-import {User, UserInfo, UserPassword} from "./data/User";
+import {User, UserInfo, UserPassword, UserSearch} from "./data/User";
 
 export class UserAPI extends BaseAPI {
   static BASE_URL = 'https://ya-praktikum.tech/api/v2/user';
@@ -24,6 +24,12 @@ export class UserAPI extends BaseAPI {
 
     read(id: string): Promise<User> {
         return this.http.get(`${UserAPI.BASE_URL}/${id}`);
+    }
+
+    search(data: UserSearch): Promise<User[]> {
+        return this.http.post(`${UserAPI.BASE_URL}/search`, {headers: {
+            'Content-Type': 'application/json'
+          }, data: {...data}});
     }
 }
 export const UserApiInstance = new UserAPI();

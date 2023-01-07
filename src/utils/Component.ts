@@ -24,7 +24,7 @@ export class Component<T extends Record<string, any> = any> {
    *
    * @returns {void}
    */
-  constructor(propsAndChildren?: T) {
+  constructor(propsAndChildren: T) {
     const { children, props } = this._getChildren(propsAndChildren);
 
     this.children = children;
@@ -55,7 +55,7 @@ export class Component<T extends Record<string, any> = any> {
     return true;
   }
 
-  setProps = (nextProps: Record<string, unknown>) => {
+  setProps = (nextProps: Record<string, any>) => {
     if (!nextProps) {
       return;
     }
@@ -123,23 +123,7 @@ export class Component<T extends Record<string, any> = any> {
     this._render();
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  private _getChildren(propsAndChildren?: T) {
-    const children: Record<string, Component> = {};
-    const props: Record<string, unknown> = {};
-
-    if (propsAndChildren) {
-      Object.entries(propsAndChildren).forEach(([key, value]) => {
-        if (value instanceof Component) {
-          children[key] = value;
-        } else {
-          props[key] = value;
-        }
-      });
-    }
-
-    return { children, props: props as T };
-  }
+  protected addCustomEvents(){};
 
   private _render() {
     const block = this.render();
@@ -164,6 +148,24 @@ export class Component<T extends Record<string, any> = any> {
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  private _getChildren(propsAndChildren?: T) {
+    const children: Record<string, Component> = {};
+    const props: Record<string, any> = {};
+
+    if (propsAndChildren) {
+      Object.entries(propsAndChildren).forEach(([key, value]) => {
+        if (value instanceof Component) {
+          children[key] = value;
+        } else {
+          props[key] = value;
+        }
+      });
+    }
+
+    return { children, props: props as T };
+  }
+
   private _addEvents(): void {
     const {events = {}} = this.props as T & { events: Record<string, () => void> };
 
@@ -174,7 +176,9 @@ export class Component<T extends Record<string, any> = any> {
     Object.entries(events).forEach(([eventName, listener]) => {
       this._element?.addEventListener(eventName, listener.bind(this));
     });
+    this.addCustomEvents();
   }
+
 
   private makePropsProxy(props: T): T {
     const self = this;

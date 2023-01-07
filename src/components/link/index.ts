@@ -2,7 +2,7 @@ import {Component} from '../../utils/Component';
 import template from './link.hbs';
 import {PropsWithRouter, withRouter} from "../../hocs/withRouter";
 
-interface LinkProps extends PropsWithRouter{
+export interface LinkProps extends PropsWithRouter{
   url: string;
   text: string;
   styles?: string;
@@ -11,7 +11,7 @@ interface LinkProps extends PropsWithRouter{
   };
 }
 
-class BaseLink extends Component<LinkProps> {
+export class BaseLink extends Component<LinkProps> {
   constructor(props: LinkProps) {
     super({
       ...props,

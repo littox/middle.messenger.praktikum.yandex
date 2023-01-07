@@ -1,16 +1,25 @@
 import {Component} from "../utils/Component";
 import store, {StoreEvents} from "../utils/Store";
 import {isEqual} from "../utils/isEqual";
+import {User} from "../api/data/User";
+import {ChatInfo} from "../api/data/Chats";
 
-export function withStore(mapStateToProps: (state: Record<string, any>) => any) {
 
-  return function wrap(Block: typeof Component<any>){
-    type Props = typeof Block extends typeof Component<infer P extends Record<string, unknown>> ? P : any;
+interface State {
+  user: User;
+  chats: ChatInfo[];
+  // messages: Record<number, Message[]>;
+  selectedChat?: number;
+  selectedChatUsers?: User[];
+}
+
+export function withStore<SP extends Record<string, any>>(mapStateToProps: (state: State) => SP) {
+  return function wrap<P>(Block: typeof Component<SP & P>){
     return class WithStore extends Block {
 
-      constructor(props: Props) {
+      constructor(props: Omit<P, keyof SP>) {
         let previousState = mapStateToProps(store.getState());
-        super({ ...props, ...previousState });
+        super({ ...(props as P), ...previousState });
 
         store.on(StoreEvents.Updated, () => {
           const stateProps = mapStateToProps(store.getState());
@@ -22,7 +31,5 @@ export function withStore(mapStateToProps: (state: Record<string, any>) => any) 
         });
       }
     }
-
   }
-
 }

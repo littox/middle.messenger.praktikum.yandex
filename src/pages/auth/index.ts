@@ -11,6 +11,8 @@ import AuthController from "../../controllers/AuthController";
 export class Auth extends Component {
 
   init() {
+    // @ts-ignore
+    // @ts-ignore
     this.children.form = new BaseForm({
       action: (data: object) => AuthController.signin(data as SigninData),
       formTitle: 'Вход',
@@ -37,6 +39,7 @@ export class Auth extends Component {
           validation: ValidationRuleNames.password,
         },
       ],
+      //@ts-ignore
       link: new Link({
         url: Routes.Registration,
         text: 'Зарегистрироваться',

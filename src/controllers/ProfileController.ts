@@ -1,7 +1,7 @@
 import store from '../utils/Store';
 import {router, Routes} from '../utils/Router';
 import {UserAPI, UserApiInstance} from "../api/UserAPI";
-import {UserInfo, UserPassword} from "../api/data/User";
+import {User, UserInfo, UserPassword, UserSearch} from "../api/data/User";
 
 export class ProfileController {
   private readonly api: UserAPI;
@@ -36,6 +36,10 @@ export class ProfileController {
     } catch (e: any) {
       console.error(e);
     }
+  }
+
+  async search(data: UserSearch): Promise<User[]> {
+    return await this.api.search(data);
   }
 }
 

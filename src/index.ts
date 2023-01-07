@@ -2,12 +2,11 @@ import { TextInput } from './components/text-input';
 import { Auth } from './pages/auth';
 import { registerComponent } from './utils/registerComponent';
 import { BaseForm } from './components/base-form';
-import { Error, ErrorProps } from './components/error';
-import { Component } from './utils/Component';
+import { Error } from './components/error';
 import { ChatItem } from './pages/chat/components/chat-item';
 import { Chats} from './pages/chat';
 import { ProfileInput } from './components/input';
-import {Profile, ProfilePage, ProfileProps} from './pages/profile';
+import {ProfilePage} from './pages/profile';
 import { ProfileForm } from './pages/profile-edit/components/form';
 import {router, Routes} from "./utils/Router";
 import {Registration} from "./pages/registration";
@@ -19,7 +18,6 @@ import {ChangePasswordForm} from "./pages/password-edit/components/form";
 import {PasswordEdit} from "./pages/password-edit";
 import {AvatarForm} from "./components/avatar-form";
 import {PrevLink} from "./components/prev-link";
-import ChatsController from "./controllers/ChatsController";
 
 registerComponent('TextInput', TextInput);
 registerComponent('ProfileInfoItem', ProfileInfoItem);
@@ -31,20 +29,6 @@ registerComponent('ChangePasswordForm', ChangePasswordForm);
 registerComponent('AvatarForm', AvatarForm);
 registerComponent('PrevLink', PrevLink);
 
-type Routing = Record<string, () => Component>;
-
-const PAGES: Routing = {
-  '/404': () => new Error({
-    code: '404',
-    text: 'Не туда попали',
-  } as ErrorProps),
-  '/500': () => new Error({
-    code: '500',
-    text: 'Мы уже фиксим',
-  } as ErrorProps),
-  // '/chat': () => new ChatBase({ chats } as ChatProps),
-  '/profile': () => new Profile({ isActiveForm: false } as ProfileProps),
-};
 
 window.addEventListener('DOMContentLoaded', async () => {
   router
@@ -69,7 +53,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   try {
     await AuthController.fetchUser();
-    await ChatsController.fetchChats()
     router.start();
 
     if (!isProtectedRoute) {
