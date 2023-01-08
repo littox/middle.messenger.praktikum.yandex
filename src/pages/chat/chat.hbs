@@ -34,6 +34,9 @@
         <input type="text" name="message" id="message-input" class="message-input" placeholder="Сообщение">
         <button class="arrow-btn" type="submit">&#11157;</button>
       </form>
+    {{#each errorMessages as |e|}}
+      <div class="input-error">{{ e }}</div>
+    {{/each}}
   </div>
 
 </div>
