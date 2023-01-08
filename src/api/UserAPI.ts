@@ -33,7 +33,7 @@ export class UserAPI extends BaseAPI {
     });
   }
 
-  updateAvatar(data: FormData): Promise<unknown> {
+  updateAvatar(data: FormData): Promise<User> {
     return this.http.put(`/profile/avatar`, { data });
   }
 

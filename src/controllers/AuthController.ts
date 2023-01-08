@@ -4,6 +4,8 @@ import {
 import store from '../utils/Store';
 import { router, Routes } from '../utils/Router';
 import MessagesController from './MessagesController';
+import {HTTPTransport} from "../utils/HTTPTransport";
+import {User} from "../api/data/User";
 
 export class AuthController {
   private readonly api: AuthAPI;
@@ -34,6 +36,10 @@ export class AuthController {
 
   async fetchUser() {
     const user = await this.api.read();
+    this.setUserToStore(user)
+  }
+  public setUserToStore(user: User){
+    user.avatar = user.avatar ? `${HTTPTransport.RESOURCE_URL}${user.avatar}` : null;
     store.set('user', user);
   }
 

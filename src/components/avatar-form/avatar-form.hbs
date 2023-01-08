@@ -1,7 +1,7 @@
 <form class="ma">
   <div class="profile-avatar"
     {{#if user.avatar}}
-       style="background-image: url('https://ya-praktikum.tech/api/v2/resources{{user.avatar}}');
+       style="background-image: url('{{user.avatar}}');
                background-size: cover;"
     {{/if}}>
     <label class="profile-avatar-label" for="avatar">Поменять аватар</label>

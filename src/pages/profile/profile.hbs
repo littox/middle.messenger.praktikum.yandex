@@ -4,7 +4,7 @@
   </nav>
   <div class="profile-wrapper">
     <div class="profile">
-      <img src="https://ya-praktikum.tech/api/v2/resources{{user.avatar}}" alt="user_name" class="profile-avatar">
+      <img src="{{user.avatar}}" alt="user_name" class="profile-avatar">
       <div class="profile-form">
         {{{ProfileInfoItem name="E-mail" value=user.email}}}
         {{{ProfileInfoItem name="Логин" value=user.login}}}
