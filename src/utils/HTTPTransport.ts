@@ -34,7 +34,7 @@ export class HTTPTransport {
 
   get: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => {
     return this.request(
-      options.data ? `${this.endpoint}${url}${queryStringify(options.data)}` : url,
+      options.data ? `${this.endpoint}${url}${queryStringify(options.data)}` : `${this.endpoint}${url}`,
       { ...options, method: Methods.GET },
       options.timeout,
     );
