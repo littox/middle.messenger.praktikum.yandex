@@ -10,7 +10,6 @@ interface MessageProps {
 
 export class Message extends Component<MessageProps> {
   constructor(props: MessageProps) {
-    console.log(props);
     super({ ...props, isMine: props.message.user_id === props.userId });
   }
 

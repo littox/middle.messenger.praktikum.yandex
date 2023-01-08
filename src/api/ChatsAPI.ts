@@ -10,8 +10,6 @@ export class ChatsAPI extends BaseAPI {
 
   update = undefined;
 
-  delete = undefined;
-
   create(data: CreateChatData) {
     return this.http.post(`/`, {
       headers: {
@@ -23,6 +21,12 @@ export class ChatsAPI extends BaseAPI {
 
   read(): Promise<ChatInfo[]> {
     return this.http.get(`/`);
+  }
+
+  delete(id: number): Promise<unknown> {
+    return this.http.delete(`/`, {headers: {
+        'Content-Type': 'application/json'
+      }, data: { chatId: id }});
   }
 
   getUsers(id: number): Promise<Array<User & { role: string }>> {

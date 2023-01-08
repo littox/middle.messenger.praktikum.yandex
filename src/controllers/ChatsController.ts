@@ -45,6 +45,12 @@ class ChatsController {
     }
   }
 
+  async delete(id: number) {
+    await this.api.delete(id);
+
+    await this.fetchChats();
+  }
+
   getToken(id: number) {
     return this.api.getToken(id);
   }
