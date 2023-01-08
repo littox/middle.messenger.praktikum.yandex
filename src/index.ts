@@ -71,8 +71,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   } catch (e) {
     if (e instanceof NotFoundException) {
       router.go(Routes.NotFound);
-    } else {
-      router.go(Routes.Error);
     }
   }
 });

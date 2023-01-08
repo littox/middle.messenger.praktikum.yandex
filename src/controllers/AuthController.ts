@@ -16,7 +16,7 @@ export class AuthController {
     try {
       await this.api.singIn(data);
 
-      router.go(Routes.Profile);
+      router.go(Routes.Chat);
     } catch (e: any) {
       console.error(e);
     }
