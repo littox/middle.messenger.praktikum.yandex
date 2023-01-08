@@ -2,7 +2,6 @@ import { TextInput } from './components/text-input';
 import { Auth } from './pages/auth';
 import { registerComponent } from './utils/registerComponent';
 import { BaseForm } from './components/base-form';
-import { Error } from './components/error';
 import { ChatItem } from './pages/chat/components/chat-item';
 import { Chats } from './pages/chat';
 import { ProfileInput } from './components/input';
@@ -19,6 +18,9 @@ import { PasswordEdit } from './pages/password-edit';
 import { AvatarForm } from './components/avatar-form';
 import { PrevLink } from './components/prev-link';
 import { Message } from './pages/chat/components/message';
+import { NotFoundException } from './utils/Exceptions';
+import { NotFound } from './pages/404';
+import { ServerError } from './pages/500';
 
 registerComponent('TextInput', TextInput);
 registerComponent('ProfileInfoItem', ProfileInfoItem);
@@ -40,8 +42,8 @@ window.addEventListener('DOMContentLoaded', async () => {
     .use(Routes.ProfilEdit, ProfileEdit)
     .use(Routes.PasswordEdit, PasswordEdit)
     .use(Routes.Chat, Chats)
-    .use(Routes.NotFound, Error)
-    .use(Routes.Error, Error);
+    .use(Routes.NotFound, NotFound)
+    .use(Routes.Error, ServerError);
 
   let isProtectedRoute = true;
 
@@ -51,19 +53,26 @@ window.addEventListener('DOMContentLoaded', async () => {
       isProtectedRoute = false;
       break;
   }
-
   try {
-    await AuthController.fetchUser();
-    router.start();
+    try {
+      await AuthController.fetchUser();
+      router.start();
 
-    if (!isProtectedRoute) {
-      router.go(Routes.Profile);
+      if (!isProtectedRoute) {
+        router.go(Routes.Profile);
+      }
+    } catch (e) {
+      router.start();
+
+      if (isProtectedRoute) {
+        router.go(Routes.Index);
+      }
     }
   } catch (e) {
-    router.start();
-
-    if (isProtectedRoute) {
-      router.go(Routes.Index);
+    if (e instanceof NotFoundException) {
+      router.go(Routes.NotFound);
+    } else {
+      router.go(Routes.Error);
     }
   }
 });

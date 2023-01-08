@@ -1,4 +1,5 @@
 import { Component } from './Component';
+import { NotFoundException } from './Exceptions';
 
 export enum Routes {
   NotFound = '/404',
@@ -111,7 +112,7 @@ class Router {
     const route = this.getRoute(pathname);
 
     if (!route) {
-      return;
+      throw new NotFoundException(`${pathname} page not found`);
     }
 
     if (this.currentRoute && this.currentRoute !== route) {
