@@ -1,18 +1,43 @@
 import { Component } from '../../utils/Component';
 import template from './base-form.hbs';
-import { TextInputProps } from '../text-input';
+import { TextInput, TextInputProps } from '../text-input';
+import { BaseLink } from '../link';
 
 export type BaseFormProps = {
-  events: Record<string, EventListener>
-  action: string;
-  formTitle: string;
-  submitLink: string;
+  events?: Record<string, EventListener>
+  action: (data: object) => void;
+  formTitle?: string;
   submitText: string;
   inputs: TextInputProps[];
-  link: { url: string, text: string };
+  link?: BaseLink;
 };
 
-export class BaseForm extends Component {
+export class BaseForm extends Component<BaseFormProps> {
+  constructor(propsAndChildren: BaseFormProps) {
+    super({
+      ...propsAndChildren,
+      events: {
+        submit: (event: Event) => {
+          event.preventDefault();
+          let isValid: boolean = true;
+          Object.values(this.children).forEach((component) => {
+            if (component instanceof TextInput) {
+              isValid = component.isValid() && isValid;
+            }
+          });
+          const formData = new FormData(event.target as HTMLFormElement);
+          const res: Record<string, unknown> = {};
+          [...formData.entries()].forEach(([key, value]) => {
+            res[key] = value;
+          });
+          if (isValid) {
+            this.props.action(res);
+          }
+        },
+      },
+    });
+  }
+
   render(): DocumentFragment {
     return this.compile(template, { ...this.props, children: this.children });
   }

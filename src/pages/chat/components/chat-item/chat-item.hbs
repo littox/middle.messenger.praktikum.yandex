@@ -1,24 +1,29 @@
-<li class="chat-list-item {{#if chat.active}}chat-list-item__active{{/if}}">
+<li class="chat-list-item {{#if isSelected}}chat-list-item__active{{/if}}">
     <div class="chat-item">
-        <div class="chat-item-avatar">
-            <img class="rounded" src="{{chat.avatarUrl}}" alt="{{chat.chatTitle}}">
-        </div>
+      <div class="chat-item-avatar"
+        {{#if chat.avatar}}
+           style="background-image: url('{{chat.avatar}}');
+                   background-size: cover;"
+        {{/if}}>
+      </div>
         <div class="chat-last-message">
             <p class="chat-title">
-                {{chat.chatTitle}}
+                {{chat.title}}
             </p>
             <p class="message-content">
-                {{#if chat.from}}
-                    <span class="message-from">{{chat.from}}:</span>
+                {{#if chat.last_message}}
+                    <span class="message-from">{{chat.last_message.user.login}}:</span>
                 {{/if}}
-                {{chat.message}}
+                {{chat.last_message.content}}
             </p>
         </div>
         <div class="chat-last-message-info">
-            <p class="c">Пт</p>
+          {{#if chat.last_message}}
+            <p class="c">{{chat.last_message.time}}</p>
+          {{/if}}
 
-            {{#if chat.unreadCount}}
-                <div class="unread-counter">{{chat.unreadCount}}</div>
+            {{#if chat.unread_count}}
+                <div class="unread-counter">{{chat.unread_count}}</div>
             {{/if}}
         </div>
     </div>

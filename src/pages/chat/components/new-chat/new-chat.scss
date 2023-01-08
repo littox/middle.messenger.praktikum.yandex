@@ -1,0 +1,14 @@
+.new-chat-wrapper {
+  position: relative;
+}
+
+.new-chat-form-wrapper {
+  position: absolute;
+  min-width: 240px;
+  left: 0;
+  top: 20px;
+  padding: 10px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 8px 0 $text-secondary;
+}

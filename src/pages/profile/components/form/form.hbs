@@ -1,8 +1,0 @@
-<form action="/profile" class="profile-form" id="js-profile-form">
-  {{#each inputs as |input|}}
-    {{{ProfileInput value=input.value disabled=../isActiveForm placeholder=input.placeholder name=input.name type=input.type validation=input.validation events=input.events}}}
-  {{/each}}
-  {{#if isActiveForm}}
-    <button type="submit" class="btn-primary">Сохранить</button>
-  {{/if}}
-</form>

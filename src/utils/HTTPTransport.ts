@@ -5,17 +5,17 @@ enum Methods {
   DELETE = 'DELETE',
 }
 
-type Data = Record<string, string | number>;
-
 type Options = {
   method: Methods;
-  data?: Data;
+  data?: any;
   headers?: Record<string, string>;
   timeout?: number;
 };
 type OptsWithNoMethod = Omit<Options, 'method'>;
 
-function queryStringify(data: Data) {
+type HTTPMethod = <R>(url: string, options?: OptsWithNoMethod) => Promise<R>
+
+function queryStringify(data: any) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
   }
@@ -25,28 +25,36 @@ function queryStringify(data: Data) {
 }
 
 export class HTTPTransport {
-  get(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
+  static API_URL = 'https://ya-praktikum.tech/api/v2';
+  static RESOURCE_URL = 'https://ya-praktikum.tech/api/v2/resources';
+  protected endpoint: string;
+
+  constructor(endpoint: string) {
+    this.endpoint = `${HTTPTransport.API_URL}${endpoint}`;
+  }
+
+  get: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => {
     return this.request(
-      options.data ? `${url}${queryStringify(options.data)}` : url,
+      options.data ? `${this.endpoint}${url}${queryStringify(options.data)}` : `${this.endpoint}${url}`,
       { ...options, method: Methods.GET },
       options.timeout,
     );
   }
 
-  post(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
-    return this.request(url, { ...options, method: Methods.POST }, options.timeout);
+  post: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => {
+    return this.request(`${this.endpoint}${url}`, { ...options, method: Methods.POST }, options.timeout);
   }
 
-  put(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
-    return this.request(url, { ...options, method: Methods.PUT }, options.timeout);
+  put: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => {
+    return this.request(`${this.endpoint}${url}`, { ...options, method: Methods.PUT }, options.timeout);
   }
 
-  delete(url: string, options: OptsWithNoMethod = {}):Promise<XMLHttpRequest> {
-    return this.request(url, { ...options, method: Methods.DELETE }, options.timeout);
+  delete: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => {
+    return this.request(`${this.endpoint}${url}`, { ...options, method: Methods.DELETE }, options.timeout);
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private request(url: string, options: Options, timeout = 5000): Promise<XMLHttpRequest> {
+  private request<Response>(url: string, options: Options, timeout = 5000): Promise<Response> {
     const { headers = {}, method, data } = options;
 
     return new Promise((resolve, reject) => {
@@ -64,7 +72,11 @@ export class HTTPTransport {
       });
 
       xhr.onload = () => {
-        resolve(xhr);
+        if (xhr.status < 400) {
+          resolve(xhr.response);
+        } else {
+          reject(xhr.response);
+        }
       };
 
       xhr.onabort = reject;
@@ -72,11 +84,17 @@ export class HTTPTransport {
 
       xhr.timeout = timeout;
       xhr.ontimeout = reject;
+
+      xhr.withCredentials = true;
+      xhr.responseType = 'json';
+
       const isGet = method === Methods.GET;
       if (isGet || !data) {
         xhr.send();
-      } else {
+      } else if (headers['Content-Type'] === 'application/json') {
         xhr.send(JSON.stringify(data));
+      } else {
+        xhr.send(data);
       }
     });
   }
