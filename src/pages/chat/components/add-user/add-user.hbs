@@ -1,0 +1,26 @@
+<div class="form-wrapper">
+
+  <form id="search-user" class="flex-row">
+    <div class="input-wrapper" style="margin: 0; justify-content: space-between">
+      <input type="text" name="login" id="login" class="input" placeholder="Логин" value="">
+      <label for="login" class="label">Логин</label>
+    </div>
+    <button type="submit" class="btn-primary" style="width: auto">&#128269;</button>
+  </form>
+  <form id="add-user">
+    <div class="form-content">
+
+      <div class="dropdown-items">
+        {{#each users as |user|}}
+          <div class="form-control">
+            <input type="checkbox" name="users" value="{{user.id}}" id="{{user.id}}"> <label for="{{user.id}}">{{user.login}}</label>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="form-footer">
+      <button type="submit" class="btn-primary" {{#if disabled}}disabled{{else}}{{/if}}>Добавить</button>
+    </div>
+  </form>
+
+</div>

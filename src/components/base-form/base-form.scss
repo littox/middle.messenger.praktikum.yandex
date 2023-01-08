@@ -4,7 +4,6 @@
   box-shadow: 0 0 6px rgb(0 0 0 / 14%);
   border-radius: 12px;
   padding: 50px 30px 30px;
-  min-height: 460px;
   width: 340px;
 }
 
@@ -17,4 +16,8 @@
 .form-content {
   margin-bottom: 45px;
   flex: 1 0 auto;
+}
+
+.form-control {
+  padding: 5px 0;
 }

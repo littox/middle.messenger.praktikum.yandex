@@ -1,0 +1,30 @@
+<div class="chat-header">
+  <div class="chat-avatar"
+    {{#if selectedChat.avatar}}
+       style="background-image: url('https://ya-praktikum.tech/api/v2/resources{{chat.avatar}}');
+               background-size: cover;"
+    {{/if}}>
+  </div>
+  <div class="chat-user">
+    {{selectedChat.title}}
+  </div>
+  <div class="chat-menu-wrapper">
+    <button class="chat-menu-button" id="chat-menu-button">
+      &#8230;
+    </button>
+    <menu class="chat-menu hide" id="chat-menu">
+      <li class="chat-menu-item" id="chat-menu-add-user">Добавить пользователя</li>
+      <li class="chat-menu-item" id="chat-menu-remove-user">Удалить пользователя</li>
+    </menu>
+    <div id="add-user-modal" class="modal">
+      <div class="modal-content">
+        {{{addUser}}}
+      </div>
+    </div>
+    <div id="remove-user-modal" class="modal">
+      <div class="modal-content">
+        {{{removeUsers}}}
+      </div>
+    </div>
+  </div>
+</div>

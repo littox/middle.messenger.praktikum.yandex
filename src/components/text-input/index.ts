@@ -11,7 +11,7 @@ export type TextInputProps = {
   errors: string[];
   validation?: ValidationRuleNames;
 };
-export class TextInput extends Component {
+export class TextInput extends Component<TextInputProps> {
   isValid(): boolean {
     const inp = this.getContent()?.querySelector('input');
     inp?.focus();
