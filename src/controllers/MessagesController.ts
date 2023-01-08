@@ -1,8 +1,6 @@
 import store from '../utils/Store';
-import WSTransport, {WSTransportEvents} from "../utils/WSTransport";
-import {Message} from "../api/data/Message";
-
-
+import WSTransport, { WSTransportEvents } from '../utils/WSTransport';
+import { MessageData } from '../api/data/MessageData';
 
 class MessagesController {
   private sockets: Map<number, WSTransport> = new Map();
@@ -32,14 +30,14 @@ class MessagesController {
   }
 
   fetchOldMessages(id: number) {
-    this.getSocket(id).send({type: 'get old', content: '0'});
+    this.getSocket(id).send({ type: 'get old', content: '0' });
   }
 
   closeAll() {
-    Array.from(this.sockets.values()).forEach(socket => socket.close());
+    Array.from(this.sockets.values()).forEach((socket) => socket.close());
   }
 
-  private getSocket(id: number): WSTransport{
+  private getSocket(id: number): WSTransport {
     const socket = this.sockets.get(id);
 
     if (!socket) {
@@ -49,8 +47,8 @@ class MessagesController {
     return socket;
   }
 
-  private onMessage(id: number, messages: Message | Message[]) {
-    let messagesToAdd: Message[] = [];
+  private onMessage(id: number, messages: MessageData | MessageData[]) {
+    let messagesToAdd: MessageData[] = [];
 
     if (Array.isArray(messages)) {
       messagesToAdd = messages.reverse();
@@ -74,6 +72,5 @@ class MessagesController {
     transport.on(WSTransportEvents.Close, () => this.onClose(id));
   }
 }
-
 
 export default new MessagesController();

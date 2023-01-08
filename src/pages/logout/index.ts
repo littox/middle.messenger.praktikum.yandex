@@ -1,9 +1,8 @@
 import { Component } from '../../utils/Component';
 import template from './logout.hbs';
-import AuthController from "../../controllers/AuthController";
+import AuthController from '../../controllers/AuthController';
 
 export class Logout extends Component {
-
   init() {
     AuthController.logout();
   }

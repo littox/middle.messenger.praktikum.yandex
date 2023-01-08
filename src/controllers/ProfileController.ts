@@ -1,9 +1,11 @@
 import store from '../utils/Store';
-import {router, Routes} from '../utils/Router';
-import {UserAPI, UserApiInstance} from "../api/UserAPI";
-import {User, UserInfo, UserPassword, UserSearch} from "../api/data/User";
+import { router, Routes } from '../utils/Router';
+import { UserAPI, UserApiInstance } from '../api/UserAPI';
+import {
+  User, UserInfo, UserPassword, UserSearch,
+} from '../api/data/User';
 
-export class ProfileController {
+class ProfileController {
   private readonly api: UserAPI;
 
   constructor(api: UserAPI) {
@@ -39,7 +41,7 @@ export class ProfileController {
   }
 
   async search(data: UserSearch): Promise<User[]> {
-    return await this.api.search(data);
+    return this.api.search(data);
   }
 }
 

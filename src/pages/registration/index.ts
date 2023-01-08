@@ -1,12 +1,12 @@
 import { Component } from '../../utils/Component';
 import template from './auth.hbs';
 import { BaseForm } from '../../components/base-form';
-import {onBlur} from "../../utils/validateInput";
-import {ValidationRuleNames} from "../../utils/Validator";
-import {Routes} from "../../utils/Router";
-import AuthController from "../../controllers/AuthController";
-import {SignupData} from "../../api/AuthAPI";
-import {Link} from "../../components/link";
+import { onBlur } from '../../utils/validateInput';
+import { ValidationRuleNames } from '../../utils/Validator';
+import { Routes } from '../../utils/Router';
+import AuthController from '../../controllers/AuthController';
+import { SignupData } from '../../api/AuthAPI';
+import { Link } from '../../components/link';
 
 export class Registration extends Component {
   init() {
@@ -86,13 +86,14 @@ export class Registration extends Component {
           errors: [],
         },
       ],
-      //@ts-ignore
+      // @ts-ignore
       link: new Link({
         url: Routes.Index,
         text: 'Войти',
       }),
-    })
+    });
   }
+
   render(): DocumentFragment {
     return this.compile(template, { form: this.children.form });
   }

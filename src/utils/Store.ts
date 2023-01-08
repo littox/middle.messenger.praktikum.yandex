@@ -2,7 +2,7 @@ import { set } from './set';
 import { EventBus } from './EventBus';
 
 export enum StoreEvents {
-  Updated = 'updated'
+  Updated = 'updated',
 }
 
 export class Store extends EventBus {
@@ -20,6 +20,5 @@ export class Store extends EventBus {
 }
 
 const store = new Store();
-
 
 export default store;

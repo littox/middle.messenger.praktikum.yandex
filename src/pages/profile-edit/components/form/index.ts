@@ -1,11 +1,11 @@
 import template from './form.hbs';
 import { Component } from '../../../../utils/Component';
 import { ProfileInput } from '../../../../components/input';
-import {ValidationRuleNames} from "../../../../utils/Validator";
-import {onBlur} from "../../../../utils/validateInput";
-import {withStore} from "../../../../hocs/withStore";
-import {User, UserInfo} from "../../../../api/data/User";
-import ProfileController from "../../../../controllers/ProfileController";
+import { ValidationRuleNames } from '../../../../utils/Validator';
+import { onBlur } from '../../../../utils/validateInput';
+import { withStore } from '../../../../hocs/withStore';
+import { User, UserInfo } from '../../../../api/data/User';
+import ProfileController from '../../../../controllers/ProfileController';
 
 export interface ProfileFormProps {
   user: User;
@@ -48,7 +48,8 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         events: {
           focusout: onBlur,
         },
-      });
+      },
+    );
     this.children.login = new ProfileInput(
       {
         type: 'text',
@@ -60,7 +61,8 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         events: {
           focusout: onBlur,
         },
-      });
+      },
+    );
     this.children.firstName = new ProfileInput(
       {
         type: 'text',
@@ -72,7 +74,8 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         events: {
           focusout: onBlur,
         },
-      });
+      },
+    );
     this.children.secondName = new ProfileInput(
       {
         type: 'text',
@@ -84,7 +87,8 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         events: {
           focusout: onBlur,
         },
-      });
+      },
+    );
     this.children.displayName = new ProfileInput(
       {
         type: 'text',
@@ -96,7 +100,8 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         events: {
           focusout: onBlur,
         },
-      });
+      },
+    );
     this.children.phone = new ProfileInput(
       {
         type: 'text',
@@ -108,8 +113,8 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         events: {
           focusout: onBlur,
         },
-      });
-
+      },
+    );
   }
 
   render(): DocumentFragment {
@@ -117,6 +122,6 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
   }
 }
 
-const withUser = withStore((state) => ({user: { ...state.user} }))
+const withUser = withStore((state) => ({ user: { ...state.user } }));
 
 export const ProfileForm = withUser(ProfileFormBase);

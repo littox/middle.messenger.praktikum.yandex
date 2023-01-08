@@ -37,4 +37,4 @@ export function isEqual(lhs: PlainObject, rhs: PlainObject) {
   }
 
   return true;
-};
+}

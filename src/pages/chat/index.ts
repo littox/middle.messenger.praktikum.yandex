@@ -1,65 +1,64 @@
 import { Component } from '../../utils/Component';
 import template from './chat.hbs';
-import {NewChat} from "./components/new-chat";
-import {withStore} from "../../hocs/withStore";
-import ChatsController from "../../controllers/ChatsController";
-import {AddUser} from "./components/add-user";
-import {RemoveUser} from "./components/remove-user";
-
+import { NewChat } from './components/new-chat';
+import { withStore } from '../../hocs/withStore';
+import ChatsController from '../../controllers/ChatsController';
+import MessagesController from '../../controllers/MessagesController';
+import { ChatHeader } from './components/chat-header';
+import { Link } from '../../components/link';
+import { Routes } from '../../utils/Router';
 
 export class ChatBase extends Component {
+  messageFormEvents() {
+    const messageForm = this.getContent()?.querySelector('#message-form');
+    messageForm?.addEventListener('submit', (event) => this.onMessage(event));
+  }
+
+  async onMessage(event: Event) {
+    event.preventDefault();
+    const input = document.getElementById('message-input') as HTMLInputElement;
+    await MessagesController.sendMessage(this.props.selectedChat.id, input?.value);
+    input.value = '';
+  }
+
   addCustomEvents() {
-    let menuBtn = this.getContent()?.querySelector("#chat-menu-button") as HTMLElement;
-    menuBtn.onclick = () => {
-      document.getElementById("chat-menu")?.classList.toggle("hide");
-    }
-
-
-    let addUserCmd = this.getContent()?.querySelector("#chat-menu-add-user") as HTMLElement;
-    let modal = this.getContent()?.querySelector("#add-user-modal") as HTMLElement;
-    addUserCmd.onclick = () => {
-      modal.style.display = 'flex';
-    }
-
-    if (modal) {
-      window.onclick = function fn(event) {
-        if (event.target === modal) {
-          modal!.style.display = 'none';
-        }
-      };
-    }
-
-    let removeUserCmd = this.getContent()?.querySelector("#chat-menu-remove-user") as HTMLElement;
-    let removeUserModal = this.getContent()?.querySelector("#remove-user-modal") as HTMLElement;
-    removeUserCmd.onclick = () => {
-      removeUserModal.style.display = 'flex';
-    }
-
-    if (removeUserModal) {
-      window.onclick = function fn(event) {
-        if (event.target === removeUserModal) {
-          removeUserModal!.style.display = 'none';
-        }
-      };
-    }
+    this.messageFormEvents();
   }
 
   render(): DocumentFragment {
-    let res = this.compile(template, { ...this.props, children: this.children });
+    const res = this.compile(template, { ...this.props, children: this.children });
     return res;
   }
 
   protected init() {
     ChatsController.fetchChats();
     this.children.newChat = new NewChat({});
-    this.children.addUser = new AddUser({users: [], disabled: true})
-    this.children.removeUsers = new RemoveUser({users: []})
+    this.children.chatHeader = new ChatHeader({});
+    this.children.profileLink = new Link({
+      url: Routes.Profile,
+      text: 'Профиль &#8250;',
+      styles: 'chat-profile-link',
+    });
   }
 }
 
-const withChats = withStore((state) => ({
-  chats: [ ...(state.chats || []) ],
-  selectedChat: (state.chats || []).find(({id}) => id === state.selectedChat),
-}))
+const withSelectedChatMessages = withStore((state) => {
+  const selectedChatId = state.selectedChat;
+  if (!selectedChatId) {
+    return {
+      chats: [...(state.chats || [])],
+      messages: [],
+      selectedChat: undefined,
+      userId: state.user.id,
+    };
+  }
 
-export const Chats = withChats(ChatBase);
+  return {
+    chats: [...(state.chats || [])],
+    messages: (state.messages || {})[selectedChatId] || [],
+    selectedChat: (state.chats || []).find(({ id }) => id === state.selectedChat),
+    userId: state.user.id,
+  };
+});
+
+export const Chats = withSelectedChatMessages(ChatBase);

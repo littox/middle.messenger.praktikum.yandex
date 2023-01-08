@@ -1,8 +1,8 @@
-import {Component} from '../../utils/Component';
+import { Component } from '../../utils/Component';
 import template from './prev-link.hbs';
-import {PropsWithRouter, withRouter} from "../../hocs/withRouter";
+import { PropsWithRouter, withRouter } from '../../hocs/withRouter';
 
-interface PrevLinkProps extends PropsWithRouter{
+interface PrevLinkProps extends PropsWithRouter {
   events?: {
     click: (e: Event) => void;
   };
@@ -13,7 +13,7 @@ class BaseLink extends Component<PrevLinkProps> {
     super({
       ...props,
       events: {
-        click: (event) => this.back(event)
+        click: (event) => this.back(event),
       },
     });
   }

@@ -1,4 +1,4 @@
-import {isArrayOrObject, isPlainObject, PlainObject} from "./isEqual";
+import { isArrayOrObject, isPlainObject, PlainObject } from './isEqual';
 
 function getKey(key: string, parentKey?: string) {
   return parentKey ? `${parentKey}[${key}]` : key;
@@ -7,7 +7,7 @@ function getKey(key: string, parentKey?: string) {
 function getParams(data: PlainObject | [], parentKey?: string) {
   const result: [string, string][] = [];
 
-  for(const [key, value] of Object.entries(data)) {
+  for (const [key, value] of Object.entries(data)) {
     if (isArrayOrObject(value)) {
       result.push(...getParams(value, getKey(key, parentKey)));
     } else {
@@ -22,5 +22,5 @@ export function queryStringify(data: PlainObject) {
     throw new Error('input must be an object');
   }
 
-  return getParams(data).map(arr => arr.join('=')).join('&');
+  return getParams(data).map((arr) => arr.join('=')).join('&');
 }

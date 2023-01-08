@@ -1,10 +1,10 @@
-import {Component} from "../../../../utils/Component";
-import template from "./add-user.hbs";
-import ChatsController from "../../../../controllers/ChatsController";
-import {ChatInfo} from "../../../../api/data/Chats";
-import {User, UserSearch} from "../../../../api/data/User";
-import ProfileController from "../../../../controllers/ProfileController";
-import {withStore} from "../../../../hocs/withStore";
+import { Component } from '../../../../utils/Component';
+import template from './add-user.hbs';
+import ChatsController from '../../../../controllers/ChatsController';
+import { ChatInfo } from '../../../../api/data/Chats';
+import { User, UserSearch } from '../../../../api/data/User';
+import ProfileController from '../../../../controllers/ProfileController';
+import { withStore } from '../../../../hocs/withStore';
 
 interface AddUserProps {
   users: User[];
@@ -17,13 +17,9 @@ export class AddUserBase extends Component<AddUserProps> {
     super(propsAndChildren);
   }
 
-  searchFormEvents() {
-    let searchForm = this.getContent()?.querySelector('#search-user');
-    searchForm?.addEventListener("submit", (event) => this.onUserSearch(event));
-  }
   addUsersFormEvents() {
-    let addUserForm = this.getContent()?.querySelector('#add-user');
-    addUserForm?.addEventListener("submit", (event) => this.onUserAdd(event));
+    const addUserForm = this.getContent()?.querySelector('#add-user');
+    addUserForm?.addEventListener('submit', (event) => this.onUserAdd(event));
   }
 
   init() {
@@ -37,43 +33,30 @@ export class AddUserBase extends Component<AddUserProps> {
       data[key] = value;
     });
 
-    let res = await ProfileController.search(data as UserSearch);
+    const res = await ProfileController.search(data as UserSearch);
 
-    this.setProps({disabled: !res.length, users: res});
+    this.setProps({ disabled: !res.length, users: res });
   }
 
   async onUserAdd(event: Event) {
     event.preventDefault();
-    let users = [...(event.target as HTMLFormElement).querySelectorAll('input[name=users]:checked')]
+    const users = [...(event.target as HTMLFormElement).querySelectorAll('input[name=users]:checked')]
       .map((input) => +(input as HTMLInputElement).value);
 
     if (!this.props.selectedChat) {
-      console.log('chat is not selected');
       return;
     }
-    // let res = await ChatsController.addUserToChat({
     await ChatsController.addUserToChat({
-      users: users,
-      chatId: this.props.selectedChat.id
+      users,
+      chatId: this.props.selectedChat.id,
     });
   }
-  // showModal() {
-  //   let el = this.getContent()?.querySelector('#new-chat-add') as HTMLElement;
-  //   if (el) {
-  //     el.onclick = () => {
-  //       document.getElementById('new-chat-modal')?.classList.toggle('hide');
-  //     };
-  //   }
-  // }
-  //
-  // hideModal() {
-  //   document.getElementById('new-chat-modal')?.classList.add('hide');
-  // }
-  //
-  // onChatAdd(data: object) {
-  //   ChatsController.create(data as CreateChatData)
-  //   this.hideModal()
-  // }
+
+  searchFormEvents() {
+    const searchForm = this.getContent()?.querySelector('#search-user');
+    searchForm?.addEventListener('submit', (event) => this.onUserSearch(event));
+  }
+
   addCustomEvents() {
     this.searchFormEvents();
     this.addUsersFormEvents();
@@ -84,8 +67,7 @@ export class AddUserBase extends Component<AddUserProps> {
   }
 }
 const withChats = withStore((state) => ({
-  // chats: [ ...(state.chats || []) ],
-  selectedChat: (state.chats || []).find(({id}) => id === state.selectedChat),
-}))
+  selectedChat: (state.chats || []).find(({ id }) => id === state.selectedChat),
+}));
 
 export const AddUser = withChats(AddUserBase);

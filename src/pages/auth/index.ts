@@ -1,15 +1,14 @@
 import { Component } from '../../utils/Component';
 import template from './auth.hbs';
-import {BaseForm} from '../../components/base-form';
-import {onBlur} from "../../utils/validateInput";
-import {ValidationRuleNames} from "../../utils/Validator";
-import {Link} from "../../components/link";
-import {Routes} from "../../utils/Router";
-import {SigninData} from "../../api/AuthAPI";
-import AuthController from "../../controllers/AuthController";
+import { BaseForm } from '../../components/base-form';
+import { onBlur } from '../../utils/validateInput';
+import { ValidationRuleNames } from '../../utils/Validator';
+import { Link } from '../../components/link';
+import { Routes } from '../../utils/Router';
+import { SigninData } from '../../api/AuthAPI';
+import AuthController from '../../controllers/AuthController';
 
 export class Auth extends Component {
-
   init() {
     // @ts-ignore
     // @ts-ignore
@@ -39,12 +38,12 @@ export class Auth extends Component {
           validation: ValidationRuleNames.password,
         },
       ],
-      //@ts-ignore
+      // @ts-ignore
       link: new Link({
         url: Routes.Registration,
         text: 'Зарегистрироваться',
       }),
-    })
+    });
   }
 
   render(): DocumentFragment {

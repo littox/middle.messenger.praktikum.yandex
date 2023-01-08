@@ -123,7 +123,7 @@ export class Component<T extends Record<string, any> = any> {
     this._render();
   }
 
-  protected addCustomEvents(){};
+  protected addCustomEvents() {}
 
   private _render() {
     const block = this.render();
@@ -138,7 +138,7 @@ export class Component<T extends Record<string, any> = any> {
   }
 
   private _removeEvents(): void {
-    const events: Record<string, () => void> = (this.props as any).events;
+    const { events } = this.props as any;
 
     if (!events || !this._element) {
       return;
@@ -167,7 +167,7 @@ export class Component<T extends Record<string, any> = any> {
   }
 
   private _addEvents(): void {
-    const {events = {}} = this.props as T & { events: Record<string, () => void> };
+    const { events = {} } = this.props as T & { events: Record<string, () => void> };
 
     if (!events) {
       return;
@@ -178,7 +178,6 @@ export class Component<T extends Record<string, any> = any> {
     });
     this.addCustomEvents();
   }
-
 
   private makePropsProxy(props: T): T {
     const self = this;

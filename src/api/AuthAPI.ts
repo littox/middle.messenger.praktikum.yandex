@@ -1,5 +1,5 @@
-import BaseAPI from "./BaseAPI";
-import {User} from "./data/User";
+import BaseAPI from './BaseAPI';
+import { User } from './data/User';
 
 export interface SignupData {
   first_name: string;
@@ -17,31 +17,36 @@ export interface SigninData {
 
 export class AuthAPI extends BaseAPI {
   static BASE_URL = 'https://ya-praktikum.tech/api/v2/auth';
+
   create = undefined;
+
   update = undefined;
+
   delete = undefined;
 
   signUp(data: SignupData): Promise<unknown> {
     return this.http.post(`${AuthAPI.BASE_URL}/signup`, {
       headers: {
-        'Content-Type': 'application/json'
-      }, data: {...data}
+        'Content-Type': 'application/json',
+      },
+      data: { ...data },
     });
   }
 
   singIn(data: SigninData): Promise<unknown> {
     return this.http.post(`${AuthAPI.BASE_URL}/signin`, {
       headers: {
-        'Content-Type': 'application/json'
-      }, data: {...data}
+        'Content-Type': 'application/json',
+      },
+      data: { ...data },
     });
   }
 
   logout(): Promise<unknown> {
     return this.http.post(`${AuthAPI.BASE_URL}/logout`, {
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     });
   }
 

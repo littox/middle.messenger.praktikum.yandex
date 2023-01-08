@@ -12,7 +12,7 @@
             </p>
             <p class="message-content">
                 {{#if chat.last_message}}
-                    <span class="message-from">{{chat.last_message.user_login}}:</span>
+                    <span class="message-from">{{chat.last_message.user.login}}:</span>
                 {{/if}}
                 {{chat.last_message.content}}
             </p>

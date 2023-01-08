@@ -1,8 +1,8 @@
-import {Component} from '../../utils/Component';
+import { Component } from '../../utils/Component';
 import template from './link.hbs';
-import {PropsWithRouter, withRouter} from "../../hocs/withRouter";
+import { PropsWithRouter, withRouter } from '../../hocs/withRouter';
 
-export interface LinkProps extends PropsWithRouter{
+export interface LinkProps extends PropsWithRouter {
   url: string;
   text: string;
   styles?: string;
@@ -16,7 +16,7 @@ export class BaseLink extends Component<LinkProps> {
     super({
       ...props,
       events: {
-        click: (event) => this.navigate(event)
+        click: (event) => this.navigate(event),
       },
     });
   }

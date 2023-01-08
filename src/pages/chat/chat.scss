@@ -18,9 +18,12 @@
 .chat-list-actions {
   text-align: right;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .chat-profile-link {
+  cursor: pointer;
   color: $text-secondary;
 }
 
@@ -105,7 +108,18 @@
   box-shadow: 0 0 8px 0 $text-secondary;
 }
 
+.chat-menu-item {
+  cursor: pointer;
+  padding: 5px 0;
+
+  &:hover {
+    background: $chat-list-bg;
+  }
+}
+
 .chat-content {
+  @include flex-column;
+
   flex: 1;
   padding: 30px 0;
   border-bottom: $chat-item-border;
@@ -145,7 +159,6 @@
   }
 }
 
-
 .modal {
   display: none;
   justify-content: center;
@@ -162,7 +175,6 @@
 
 .modal-content {
   margin: auto;
-  //width: 500px;
   display: flex;
   background: #fff;
   border-radius: 12px;
@@ -172,4 +184,3 @@
   padding-top: 40%;
   padding-bottom: 70%;
 }
-

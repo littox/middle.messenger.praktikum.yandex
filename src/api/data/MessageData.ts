@@ -1,4 +1,4 @@
-export interface Message {
+export interface MessageData {
   chat_id: number;
   time: string;
   type: string;

@@ -5,7 +5,6 @@ enum Methods {
   DELETE = 'DELETE',
 }
 
-
 type Options = {
   method: Methods;
   data?: any;
@@ -82,7 +81,7 @@ export class HTTPTransport {
       const isGet = method === Methods.GET;
       if (isGet || !data) {
         xhr.send();
-      } else if(headers['Content-Type'] === 'application/json') {
+      } else if (headers['Content-Type'] === 'application/json') {
         xhr.send(JSON.stringify(data));
       } else {
         xhr.send(data);

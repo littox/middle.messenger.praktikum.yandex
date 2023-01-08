@@ -1,10 +1,10 @@
 import template from './form.hbs';
 import { Component } from '../../../../utils/Component';
-import {ValidationRuleNames} from "../../../../utils/Validator";
-import {onBlur} from "../../../../utils/validateInput";
-import {UserPassword} from "../../../../api/data/User";
-import ProfileController from "../../../../controllers/ProfileController";
-import {ProfileInput} from "../../../../components/input";
+import { ValidationRuleNames } from '../../../../utils/Validator';
+import { onBlur } from '../../../../utils/validateInput';
+import { UserPassword } from '../../../../api/data/User';
+import ProfileController from '../../../../controllers/ProfileController';
+import { ProfileInput } from '../../../../components/input';
 
 export interface ChangePasswordFormProps {
   events: Record<string, EventListener>;
@@ -50,7 +50,8 @@ export class ChangePasswordForm extends Component<ChangePasswordFormProps> {
         events: {
           focusout: onBlur,
         },
-      });
+      },
+    );
     this.children.newPassword = new ProfileInput(
       {
         type: 'password',
@@ -61,7 +62,8 @@ export class ChangePasswordForm extends Component<ChangePasswordFormProps> {
         events: {
           focusout: onBlur,
         },
-      });
+      },
+    );
     this.children.passwordConfirm = new ProfileInput(
       {
         type: 'password',
@@ -72,6 +74,7 @@ export class ChangePasswordForm extends Component<ChangePasswordFormProps> {
         events: {
           focusout: onBlur,
         },
-      });
+      },
+    );
   }
 }

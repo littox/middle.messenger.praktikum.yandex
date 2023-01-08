@@ -4,20 +4,21 @@ import { registerComponent } from './utils/registerComponent';
 import { BaseForm } from './components/base-form';
 import { Error } from './components/error';
 import { ChatItem } from './pages/chat/components/chat-item';
-import { Chats} from './pages/chat';
+import { Chats } from './pages/chat';
 import { ProfileInput } from './components/input';
-import {ProfilePage} from './pages/profile';
+import { ProfilePage } from './pages/profile';
 import { ProfileForm } from './pages/profile-edit/components/form';
-import {router, Routes} from "./utils/Router";
-import {Registration} from "./pages/registration";
-import {Logout} from "./pages/logout";
-import AuthController from "./controllers/AuthController";
-import {ProfileInfoItem} from "./pages/profile/components/info-item";
-import {ProfileEdit} from "./pages/profile-edit";
-import {ChangePasswordForm} from "./pages/password-edit/components/form";
-import {PasswordEdit} from "./pages/password-edit";
-import {AvatarForm} from "./components/avatar-form";
-import {PrevLink} from "./components/prev-link";
+import { router, Routes } from './utils/Router';
+import { Registration } from './pages/registration';
+import { Logout } from './pages/logout';
+import AuthController from './controllers/AuthController';
+import { ProfileInfoItem } from './pages/profile/components/info-item';
+import { ProfileEdit } from './pages/profile-edit';
+import { ChangePasswordForm } from './pages/password-edit/components/form';
+import { PasswordEdit } from './pages/password-edit';
+import { AvatarForm } from './components/avatar-form';
+import { PrevLink } from './components/prev-link';
+import { Message } from './pages/chat/components/message';
 
 registerComponent('TextInput', TextInput);
 registerComponent('ProfileInfoItem', ProfileInfoItem);
@@ -28,7 +29,7 @@ registerComponent('ProfileForm', ProfileForm);
 registerComponent('ChangePasswordForm', ChangePasswordForm);
 registerComponent('AvatarForm', AvatarForm);
 registerComponent('PrevLink', PrevLink);
-
+registerComponent('Message', Message);
 
 window.addEventListener('DOMContentLoaded', async () => {
   router
@@ -40,7 +41,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     .use(Routes.PasswordEdit, PasswordEdit)
     .use(Routes.Chat, Chats)
     .use(Routes.NotFound, Error)
-    .use(Routes.Error, Error)
+    .use(Routes.Error, Error);
 
   let isProtectedRoute = true;
 
@@ -56,7 +57,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     router.start();
 
     if (!isProtectedRoute) {
-      router.go(Routes.Profile)
+      router.go(Routes.Profile);
     }
   } catch (e) {
     router.start();
@@ -65,5 +66,4 @@ window.addEventListener('DOMContentLoaded', async () => {
       router.go(Routes.Index);
     }
   }
-
 });

@@ -1,7 +1,7 @@
-import {Component} from '../../utils/Component';
+import { Component } from '../../utils/Component';
 import template from './base-form.hbs';
-import {TextInput, TextInputProps} from '../text-input';
-import {BaseLink} from "../link";
+import { TextInput, TextInputProps } from '../text-input';
+import { BaseLink } from '../link';
 
 export type BaseFormProps = {
   events?: Record<string, EventListener>
@@ -13,10 +13,10 @@ export type BaseFormProps = {
 };
 
 export class BaseForm extends Component<BaseFormProps> {
-
   constructor(propsAndChildren: BaseFormProps) {
     super({
-      ...propsAndChildren, events: {
+      ...propsAndChildren,
+      events: {
         submit: (event: Event) => {
           event.preventDefault();
           let isValid: boolean = true;
@@ -31,14 +31,14 @@ export class BaseForm extends Component<BaseFormProps> {
             res[key] = value;
           });
           if (isValid) {
-              this.props.action(res);
+            this.props.action(res);
           }
-        }
-      }
+        },
+      },
     });
   }
 
   render(): DocumentFragment {
-    return this.compile(template, {...this.props, children: this.children});
+    return this.compile(template, { ...this.props, children: this.children });
   }
 }

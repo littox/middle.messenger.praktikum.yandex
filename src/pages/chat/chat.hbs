@@ -3,7 +3,7 @@
     <nav class="chat-list-header">
       <div class="chat-list-actions">
         {{{newChat}}}
-        <a href="/profile" class="chat-profile-link">Профиль &#8250;</a>
+        {{{profileLink}}}
       </div>
       <div class="chat-list-search">
         <input type="text" name="search" id="search" class="search-input" placeholder="Поиск">
@@ -16,50 +16,30 @@
     </ul>
   </div>
   <div class="chat-content-wrapper">
-    <div class="chat-header">
-      <div class="chat-avatar"
-        {{#if chat.avatar}}
-           style="background-image: url('https://ya-praktikum.tech/api/v2/resources{{chat.avatar}}');
-                   background-size: cover;"
-        {{/if}}>
-      </div>
-      <div class="chat-user">
-        {{selectedChat.title}}
-      </div>
-      <div class="chat-menu-wrapper">
-        <button class="chat-menu-button" id="chat-menu-button">
-          &#8230;
-        </button>
-        <menu class="chat-menu hide" id="chat-menu">
-          <li id="chat-menu-add-user">Добавить пользователя</li>
-          <li id="chat-menu-remove-user">Удалить пользователя</li>
-        </menu>
-          <div id="add-user-modal" class="modal">
-            <div class="modal-content">
-              {{{addUser}}}
-            </div>
-          </div>
-          <div id="remove-user-modal" class="modal">
-            <div class="modal-content">
-              {{{removeUsers}}}
-            </div>
-          </div>
-      </div>
-    </div>
+    {{#if selectedChat }}
+        {{{chatHeader}}}
+    {{/if}}
+
     <div class="chat-content">
-      <p>
-        <a href="/404">404</a>
-      </p>
-      <p>
-        <a href="/500">500</a>
-      </p>
-      ТУТ БУДЕТ СОДЕРЖИМОЕ ЧАТА
+      {{#if selectedChat }}
+          {{#each messages as |message|}}
+            {{{Message message=message userId=../userId}}}
+          {{/each}}
+      {{else}}
+        <p>
+          <a href="/404">404</a>
+        </p>
+        <p>
+          <a href="/500">500</a>
+        </p>
+        Выбирете чат
+      {{/if}}
+
     </div>
-    <div class="message-panel">
-      <button class="message-attachment">&#128206;</button>
-      <input type="text" name="message" class="message-input" placeholder="Сообщение">
-      <button class="arrow-btn">&#11157;</button>
-    </div>
+      <form class="message-panel" id="message-form">
+        <input type="text" name="message" id="message-input" class="message-input" placeholder="Сообщение">
+        <button class="arrow-btn" type="submit">&#11157;</button>
+      </form>
   </div>
 
 </div>

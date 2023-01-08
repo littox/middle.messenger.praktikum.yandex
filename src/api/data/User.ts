@@ -1,4 +1,4 @@
-export interface User extends UserInfo{
+export interface User extends UserInfo {
   id: number;
   avatar: string;
 }
