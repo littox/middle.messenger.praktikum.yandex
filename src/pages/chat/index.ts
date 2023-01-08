@@ -26,8 +26,7 @@ export class ChatBase extends Component {
   }
 
   render(): DocumentFragment {
-    const res = this.compile(template, { ...this.props, children: this.children });
-    return res;
+    return this.compile(template, { ...this.props, children: this.children });
   }
 
   protected init() {
@@ -49,7 +48,7 @@ const withSelectedChatMessages = withStore((state) => {
       chats: [...(state.chats || [])],
       messages: [],
       selectedChat: undefined,
-      userId: state.user.id,
+      userId: state.user?.id,
     };
   }
 

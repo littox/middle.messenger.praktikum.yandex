@@ -1,7 +1,6 @@
 import { Component } from '../../utils/Component';
 import template from './auth.hbs';
 import { BaseForm } from '../../components/base-form';
-import { onBlur } from '../../utils/validateInput';
 import { ValidationRuleNames } from '../../utils/Validator';
 import { Routes } from '../../utils/Router';
 import AuthController from '../../controllers/AuthController';
@@ -21,17 +20,11 @@ export class Registration extends Component {
           name: 'email',
           validation: ValidationRuleNames.email,
           errors: [],
-          events: {
-            focusout: onBlur,
-          },
         },
         {
           type: 'text',
           placeholder: 'Логин',
           name: 'login',
-          events: {
-            focusout: onBlur,
-          },
           validation: ValidationRuleNames.login,
           errors: [],
         },
@@ -39,9 +32,6 @@ export class Registration extends Component {
           type: 'text',
           placeholder: 'Имя',
           name: 'first_name',
-          events: {
-            focusout: onBlur,
-          },
           validation: ValidationRuleNames.name,
           errors: [],
         },
@@ -49,9 +39,6 @@ export class Registration extends Component {
           type: 'text',
           placeholder: 'Фамилия',
           name: 'second_name',
-          events: {
-            focusout: onBlur,
-          },
           validation: ValidationRuleNames.name,
           errors: [],
         },
@@ -59,9 +46,6 @@ export class Registration extends Component {
           type: 'text',
           placeholder: 'Телефон',
           name: 'phone',
-          events: {
-            focusout: onBlur,
-          },
           validation: ValidationRuleNames.phone,
           errors: [],
         },
@@ -69,9 +53,6 @@ export class Registration extends Component {
           type: 'password',
           placeholder: 'Пароль',
           name: 'password',
-          events: {
-            focusout: onBlur,
-          },
           validation: ValidationRuleNames.password,
           errors: [],
         },
@@ -79,9 +60,6 @@ export class Registration extends Component {
           type: 'password',
           placeholder: 'Пароль (еще раз)',
           name: 'password_confirmation',
-          events: {
-            focusout: onBlur,
-          },
           validation: ValidationRuleNames.password,
           errors: [],
         },

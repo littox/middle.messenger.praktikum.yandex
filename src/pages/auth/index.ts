@@ -1,7 +1,6 @@
 import { Component } from '../../utils/Component';
 import template from './auth.hbs';
 import { BaseForm } from '../../components/base-form';
-import { onBlur } from '../../utils/validateInput';
 import { ValidationRuleNames } from '../../utils/Validator';
 import { Link } from '../../components/link';
 import { Routes } from '../../utils/Router';
@@ -10,8 +9,6 @@ import AuthController from '../../controllers/AuthController';
 
 export class Auth extends Component {
   init() {
-    // @ts-ignore
-    // @ts-ignore
     this.children.form = new BaseForm({
       action: (data: object) => AuthController.signin(data as SigninData),
       formTitle: 'Вход',
@@ -21,9 +18,6 @@ export class Auth extends Component {
           type: 'text',
           placeholder: 'Логин',
           name: 'login',
-          events: {
-            focusout: onBlur,
-          },
           errors: [],
           validation: ValidationRuleNames.login,
         },
@@ -31,9 +25,6 @@ export class Auth extends Component {
           type: 'password',
           placeholder: 'Пароль',
           name: 'password',
-          events: {
-            focusout: onBlur,
-          },
           errors: [],
           validation: ValidationRuleNames.password,
         },

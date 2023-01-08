@@ -1,7 +1,6 @@
 import template from './form.hbs';
 import { Component } from '../../../../utils/Component';
 import { ValidationRuleNames } from '../../../../utils/Validator';
-import { onBlur } from '../../../../utils/validateInput';
 import { UserPassword } from '../../../../api/data/User';
 import ProfileController from '../../../../controllers/ProfileController';
 import { ProfileInput } from '../../../../components/input';
@@ -13,7 +12,7 @@ export interface ChangePasswordFormProps {
 export class ChangePasswordForm extends Component<ChangePasswordFormProps> {
   constructor(propsAndChildren: ChangePasswordFormProps) {
     super(propsAndChildren);
-    this.props.events = { submit: this.onSubmit };
+    this.props.events = { submit: (e: Event) => this.onSubmit(e) };
   }
 
   onSubmit(e: Event): void {
@@ -47,9 +46,6 @@ export class ChangePasswordForm extends Component<ChangePasswordFormProps> {
         name: 'oldPassword',
         validation: ValidationRuleNames.password,
         errors: [],
-        events: {
-          focusout: onBlur,
-        },
       },
     );
     this.children.newPassword = new ProfileInput(
@@ -59,9 +55,6 @@ export class ChangePasswordForm extends Component<ChangePasswordFormProps> {
         name: 'newPassword',
         validation: ValidationRuleNames.password,
         errors: [],
-        events: {
-          focusout: onBlur,
-        },
       },
     );
     this.children.passwordConfirm = new ProfileInput(
@@ -71,9 +64,6 @@ export class ChangePasswordForm extends Component<ChangePasswordFormProps> {
         name: 'passwordConfirm',
         validation: ValidationRuleNames.password,
         errors: [],
-        events: {
-          focusout: onBlur,
-        },
       },
     );
   }
