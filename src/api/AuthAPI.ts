@@ -16,7 +16,9 @@ export interface SigninData {
 }
 
 export class AuthAPI extends BaseAPI {
-  static BASE_URL = 'https://ya-praktikum.tech/api/v2/auth';
+  constructor() {
+    super('/auth');
+  }
 
   create = undefined;
 
@@ -25,7 +27,7 @@ export class AuthAPI extends BaseAPI {
   delete = undefined;
 
   signUp(data: SignupData): Promise<unknown> {
-    return this.http.post(`${AuthAPI.BASE_URL}/signup`, {
+    return this.http.post(`/signup`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -34,7 +36,7 @@ export class AuthAPI extends BaseAPI {
   }
 
   singIn(data: SigninData): Promise<unknown> {
-    return this.http.post(`${AuthAPI.BASE_URL}/signin`, {
+    return this.http.post(`/signin`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -43,7 +45,7 @@ export class AuthAPI extends BaseAPI {
   }
 
   logout(): Promise<unknown> {
-    return this.http.post(`${AuthAPI.BASE_URL}/logout`, {
+    return this.http.post(`/logout`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -51,7 +53,7 @@ export class AuthAPI extends BaseAPI {
   }
 
   read(): Promise<User> {
-    return this.http.get(`${AuthAPI.BASE_URL}/user`);
+    return this.http.get(`/user`);
   }
 }
 

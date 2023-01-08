@@ -2,6 +2,7 @@ import { ChatsAPI } from '../api/ChatsAPI';
 import store from '../utils/Store';
 import { AddUserToChatData, CreateChatData } from '../api/data/Chats';
 import MessagesController from './MessagesController';
+import {HTTPTransport} from "../utils/HTTPTransport";
 
 class ChatsController {
   private readonly api: ChatsAPI;
@@ -20,6 +21,7 @@ class ChatsController {
     const chats = await this.api.read();
 
     const promises = chats.map(async (chat) => {
+      chat.avatar = chat.avatar ? `${HTTPTransport.RESOURCE_URL}${chat.avatar}` : null;
       const token = await this.getToken(chat.id);
 
       return MessagesController.connect(chat.id, token);
@@ -41,6 +43,12 @@ class ChatsController {
     } catch (e: any) {
       console.log('Ошибка удаления пользователя:', e);
     }
+  }
+
+  async delete(id: number) {
+    await this.api.delete(id);
+
+    await this.fetchChats();
   }
 
   getToken(id: number) {

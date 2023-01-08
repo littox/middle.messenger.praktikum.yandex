@@ -4,7 +4,10 @@ import {
 } from './data/User';
 
 export class UserAPI extends BaseAPI {
-  static BASE_URL = 'https://ya-praktikum.tech/api/v2/user';
+
+  constructor() {
+    super('/user');
+  }
 
   create = undefined;
 
@@ -13,7 +16,7 @@ export class UserAPI extends BaseAPI {
   delete = undefined;
 
   updateProfile(data: UserInfo): Promise<User> {
-    return this.http.put(`${UserAPI.BASE_URL}/profile`, {
+    return this.http.put(`/profile`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -22,7 +25,7 @@ export class UserAPI extends BaseAPI {
   }
 
   updatePassword(data: UserPassword): Promise<unknown> {
-    return this.http.put(`${UserAPI.BASE_URL}/password`, {
+    return this.http.put(`/password`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -30,16 +33,16 @@ export class UserAPI extends BaseAPI {
     });
   }
 
-  updateAvatar(data: FormData): Promise<unknown> {
-    return this.http.put(`${UserAPI.BASE_URL}/profile/avatar`, { data });
+  updateAvatar(data: FormData): Promise<User> {
+    return this.http.put(`/profile/avatar`, { data });
   }
 
   read(id: string): Promise<User> {
-    return this.http.get(`${UserAPI.BASE_URL}/${id}`);
+    return this.http.get(`/${id}`);
   }
 
   search(data: UserSearch): Promise<User[]> {
-    return this.http.post(`${UserAPI.BASE_URL}/search`, {
+    return this.http.post(`/search`, {
       headers: {
         'Content-Type': 'application/json',
       },

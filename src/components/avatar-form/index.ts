@@ -11,7 +11,7 @@ export interface AvatarFormProps {
 export class AvatarFormBase extends Component<AvatarFormProps> {
   constructor(propsAndChildren: AvatarFormProps) {
     super(propsAndChildren);
-    this.props.events = { change: this.onChange };
+    this.props.events = { change: (e: Event) => this.onChange(e) };
   }
 
   onChange(e: Event): void {

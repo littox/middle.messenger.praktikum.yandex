@@ -1,12 +1,13 @@
-import { Component } from '../../utils/Component';
+import {Component} from '../../utils/Component';
 import template from './chat.hbs';
-import { NewChat } from './components/new-chat';
-import { withStore } from '../../hocs/withStore';
+import {NewChat} from './components/new-chat';
+import {withStore} from '../../hocs/withStore';
 import ChatsController from '../../controllers/ChatsController';
 import MessagesController from '../../controllers/MessagesController';
-import { ChatHeader } from './components/chat-header';
-import { Link } from '../../components/link';
-import { Routes } from '../../utils/Router';
+import {ChatHeader} from './components/chat-header';
+import {Link} from '../../components/link';
+import {Routes} from '../../utils/Router';
+import {ValidationRuleNames, validator} from "../../utils/Validator";
 
 export class ChatBase extends Component {
   messageFormEvents() {
@@ -17,8 +18,12 @@ export class ChatBase extends Component {
   async onMessage(event: Event) {
     event.preventDefault();
     const input = document.getElementById('message-input') as HTMLInputElement;
-    await MessagesController.sendMessage(this.props.selectedChat.id, input?.value);
-    input.value = '';
+    const errorMessages = validator.messages(input.value, [ValidationRuleNames.required]);
+    if (errorMessages.length === 0) {
+      await MessagesController.sendMessage(this.props.selectedChat.id, input?.value);
+      input.value = '';
+    }
+    this.setProps({errorMessages: errorMessages});
   }
 
   addCustomEvents() {
@@ -26,8 +31,7 @@ export class ChatBase extends Component {
   }
 
   render(): DocumentFragment {
-    const res = this.compile(template, { ...this.props, children: this.children });
-    return res;
+    return this.compile(template, { ...this.props, children: this.children });
   }
 
   protected init() {
@@ -49,7 +53,7 @@ const withSelectedChatMessages = withStore((state) => {
       chats: [...(state.chats || [])],
       messages: [],
       selectedChat: undefined,
-      userId: state.user.id,
+      userId: state.user?.id,
     };
   }
 

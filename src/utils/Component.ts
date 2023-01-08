@@ -138,13 +138,13 @@ export class Component<T extends Record<string, any> = any> {
   }
 
   private _removeEvents(): void {
-    const { events } = this.props as any;
+    const { events = {} } = this.props as T & { events: Record<string, () => void> };
 
     if (!events || !this._element) {
       return;
     }
     Object.entries(events).forEach(([event, listener]) => {
-      this._element!.removeEventListener(event, listener.bind(this));
+      this._element!.removeEventListener(event, listener);
     });
   }
 
@@ -174,7 +174,7 @@ export class Component<T extends Record<string, any> = any> {
     }
 
     Object.entries(events).forEach(([eventName, listener]) => {
-      this._element?.addEventListener(eventName, listener.bind(this));
+      this._element?.addEventListener(eventName, listener);
     });
     this.addCustomEvents();
   }

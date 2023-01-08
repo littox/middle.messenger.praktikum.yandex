@@ -59,7 +59,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       router.start();
 
       if (!isProtectedRoute) {
-        router.go(Routes.Profile);
+        router.go(Routes.Chat);
       }
     } catch (e) {
       router.start();
@@ -71,8 +71,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   } catch (e) {
     if (e instanceof NotFoundException) {
       router.go(Routes.NotFound);
-    } else {
-      router.go(Routes.Error);
     }
   }
 });

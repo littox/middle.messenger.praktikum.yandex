@@ -11,7 +11,7 @@ export interface AddUserToChatData {
 export interface ChatInfo {
   id: number;
   title: string;
-  avatar: string;
+  avatar: string | null;
   unread_count: number;
   last_message: {
     user: User,

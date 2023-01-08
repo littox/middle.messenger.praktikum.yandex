@@ -1,6 +1,6 @@
 export interface User extends UserInfo {
   id: number;
-  avatar: string;
+  avatar: string | null;
 }
 
 export interface UserInfo {

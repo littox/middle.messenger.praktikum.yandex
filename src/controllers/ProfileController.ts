@@ -1,9 +1,9 @@
-import store from '../utils/Store';
 import { router, Routes } from '../utils/Router';
 import { UserAPI, UserApiInstance } from '../api/UserAPI';
 import {
   User, UserInfo, UserPassword, UserSearch,
 } from '../api/data/User';
+import AuthController from "./AuthController";
 
 class ProfileController {
   private readonly api: UserAPI;
@@ -15,7 +15,7 @@ class ProfileController {
   async updateProfile(data: UserInfo) {
     try {
       const user = await this.api.updateProfile(data);
-      store.set('user', user);
+      AuthController.setUserToStore(user);
       router.go(Routes.Profile);
     } catch (e: any) {
       console.error(e);
@@ -34,7 +34,7 @@ class ProfileController {
   async updateAvatar(data: FormData) {
     try {
       const user = await this.api.updateAvatar(data);
-      store.set('user', user);
+      AuthController.setUserToStore(user);
     } catch (e: any) {
       console.error(e);
     }

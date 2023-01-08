@@ -3,14 +3,15 @@ import { User } from './data/User';
 import { AddUserToChatData, ChatInfo, CreateChatData } from './data/Chats';
 
 export class ChatsAPI extends BaseAPI {
-  static BASE_URL = 'https://ya-praktikum.tech/api/v2/chats';
+
+  constructor() {
+    super('/chats');
+  }
 
   update = undefined;
 
-  delete = undefined;
-
   create(data: CreateChatData) {
-    return this.http.post(`${ChatsAPI.BASE_URL}/`, {
+    return this.http.post(`/`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -19,11 +20,17 @@ export class ChatsAPI extends BaseAPI {
   }
 
   read(): Promise<ChatInfo[]> {
-    return this.http.get(`${ChatsAPI.BASE_URL}/`);
+    return this.http.get(`/`);
+  }
+
+  delete(id: number): Promise<unknown> {
+    return this.http.delete(`/`, {headers: {
+        'Content-Type': 'application/json'
+      }, data: { chatId: id }});
   }
 
   getUsers(id: number): Promise<Array<User & { role: string }>> {
-    return this.http.get(`${ChatsAPI.BASE_URL}/${id}/users`, {
+    return this.http.get(`/${id}/users`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -31,7 +38,7 @@ export class ChatsAPI extends BaseAPI {
   }
 
   addUsers(data: AddUserToChatData): Promise<unknown> {
-    return this.http.put(`${ChatsAPI.BASE_URL}/users`, {
+    return this.http.put(`/users`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -40,7 +47,7 @@ export class ChatsAPI extends BaseAPI {
   }
 
   deleteUsers(data: AddUserToChatData): Promise<unknown> {
-    return this.http.delete(`${ChatsAPI.BASE_URL}/users`, {
+    return this.http.delete(`/users`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -49,7 +56,7 @@ export class ChatsAPI extends BaseAPI {
   }
 
   async getToken(id: number): Promise<string> {
-    const response = await this.http.post<{ token: string }>(`${ChatsAPI.BASE_URL}/token/${id}`, {
+    const response = await this.http.post<{ token: string }>(`/token/${id}`, {
       headers: {
         'Content-Type': 'application/json',
       },

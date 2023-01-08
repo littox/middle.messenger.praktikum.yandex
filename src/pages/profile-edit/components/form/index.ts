@@ -2,7 +2,6 @@ import template from './form.hbs';
 import { Component } from '../../../../utils/Component';
 import { ProfileInput } from '../../../../components/input';
 import { ValidationRuleNames } from '../../../../utils/Validator';
-import { onBlur } from '../../../../utils/validateInput';
 import { withStore } from '../../../../hocs/withStore';
 import { User, UserInfo } from '../../../../api/data/User';
 import ProfileController from '../../../../controllers/ProfileController';
@@ -15,7 +14,7 @@ export interface ProfileFormProps {
 export class ProfileFormBase extends Component<ProfileFormProps> {
   constructor(propsAndChildren: ProfileFormProps) {
     super(propsAndChildren);
-    this.props.events = { submit: this.onSubmit };
+    this.props.events = { submit: (e:Event) => this.onSubmit(e) };
   }
 
   onSubmit(e: Event): void {
@@ -45,9 +44,6 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         value: this.props.user?.email,
         validation: ValidationRuleNames.email,
         errors: [],
-        events: {
-          focusout: onBlur,
-        },
       },
     );
     this.children.login = new ProfileInput(
@@ -58,9 +54,6 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         value: this.props.user?.login,
         validation: ValidationRuleNames.login,
         errors: [],
-        events: {
-          focusout: onBlur,
-        },
       },
     );
     this.children.firstName = new ProfileInput(
@@ -71,9 +64,6 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         value: this.props.user?.first_name,
         validation: ValidationRuleNames.name,
         errors: [],
-        events: {
-          focusout: onBlur,
-        },
       },
     );
     this.children.secondName = new ProfileInput(
@@ -84,9 +74,6 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         value: this.props.user?.second_name,
         validation: ValidationRuleNames.name,
         errors: [],
-        events: {
-          focusout: onBlur,
-        },
       },
     );
     this.children.displayName = new ProfileInput(
@@ -97,9 +84,6 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         value: this.props.user?.display_name,
         validation: ValidationRuleNames.name,
         errors: [],
-        events: {
-          focusout: onBlur,
-        },
       },
     );
     this.children.phone = new ProfileInput(
@@ -110,9 +94,6 @@ export class ProfileFormBase extends Component<ProfileFormProps> {
         value: this.props.user?.phone,
         validation: ValidationRuleNames.phone,
         errors: [],
-        events: {
-          focusout: onBlur,
-        },
       },
     );
   }
