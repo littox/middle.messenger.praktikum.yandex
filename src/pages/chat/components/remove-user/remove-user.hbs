@@ -1,0 +1,16 @@
+<div class="form-wrapper">
+    <form id="remove-user">
+    <div class="form-content">
+      <div class="dropdown-items">
+        {{#each users as |user|}}
+          <div class="form-control">
+            <input type="checkbox" name="users" value="{{user.id}}" id="{{user.id}}"> <label for="{{user.id}}">{{user.login}}</label>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <div class="form-footer">
+      <button type="submit" class="btn-primary" {{#if disabled}}disabled{{else}}{{/if}}>Удалить</button>
+    </div>
+  </form>
+</div>

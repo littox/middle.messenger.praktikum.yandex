@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid';
 import { EventBus } from './EventBus';
 
-export class Component<T extends Record<string, unknown> = any> {
+export class Component<T extends Record<string, any> = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -24,7 +24,7 @@ export class Component<T extends Record<string, unknown> = any> {
    *
    * @returns {void}
    */
-  constructor(propsAndChildren?: T) {
+  constructor(propsAndChildren: T) {
     const { children, props } = this._getChildren(propsAndChildren);
 
     this.children = children;
@@ -39,7 +39,11 @@ export class Component<T extends Record<string, unknown> = any> {
     this.eventBus().emit(Component.EVENTS.INIT);
   }
 
-  init() {
+  protected init() {
+  }
+
+  private _init() {
+    this.init();
     this.eventBus().emit(Component.EVENTS.FLOW_RENDER);
   }
 
@@ -51,7 +55,7 @@ export class Component<T extends Record<string, unknown> = any> {
     return true;
   }
 
-  setProps = (nextProps: Record<string, unknown>) => {
+  setProps = (nextProps: Record<string, any>) => {
     if (!nextProps) {
       return;
     }
@@ -101,7 +105,7 @@ export class Component<T extends Record<string, unknown> = any> {
   }
 
   private registerEvents() {
-    this.eventBus().on(Component.EVENTS.INIT, this.init.bind(this));
+    this.eventBus().on(Component.EVENTS.INIT, this._init.bind(this));
     this.eventBus().on(Component.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     this.eventBus().on(Component.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     this.eventBus().on(Component.EVENTS.FLOW_RENDER, this._render.bind(this));
@@ -119,23 +123,7 @@ export class Component<T extends Record<string, unknown> = any> {
     this._render();
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  private _getChildren(propsAndChildren?: T) {
-    const children: Record<string, Component> = {};
-    const props: Record<string, unknown> = {};
-
-    if (propsAndChildren) {
-      Object.entries(propsAndChildren).forEach(([key, value]) => {
-        if (value instanceof Component) {
-          children[key] = value;
-        } else {
-          props[key] = value;
-        }
-      });
-    }
-
-    return { children, props: props as T };
-  }
+  protected addCustomEvents() {}
 
   private _render() {
     const block = this.render();
@@ -150,26 +138,45 @@ export class Component<T extends Record<string, unknown> = any> {
   }
 
   private _removeEvents(): void {
-    const events: Record<string, () => void> = (this.props as any).events;
+    const { events = {} } = this.props as T & { events: Record<string, () => void> };
 
     if (!events || !this._element) {
       return;
     }
     Object.entries(events).forEach(([event, listener]) => {
-      this._element!.removeEventListener(event, listener.bind(this));
+      this._element!.removeEventListener(event, listener);
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  private _getChildren(propsAndChildren?: T) {
+    const children: Record<string, Component> = {};
+    const props: Record<string, any> = {};
+
+    if (propsAndChildren) {
+      Object.entries(propsAndChildren).forEach(([key, value]) => {
+        if (value instanceof Component) {
+          children[key] = value;
+        } else {
+          props[key] = value;
+        }
+      });
+    }
+
+    return { children, props: props as T };
+  }
+
   private _addEvents(): void {
-    const { events = {} } = this.props;
+    const { events = {} } = this.props as T & { events: Record<string, () => void> };
 
     if (!events) {
       return;
     }
 
     Object.entries(events).forEach(([eventName, listener]) => {
-      this._element?.addEventListener(eventName, listener.bind(this));
+      this._element?.addEventListener(eventName, listener);
     });
+    this.addCustomEvents();
   }
 
   private makePropsProxy(props: T): T {

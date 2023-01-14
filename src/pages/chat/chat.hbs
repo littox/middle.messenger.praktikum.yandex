@@ -2,7 +2,8 @@
   <div class="chat-list-wrapper">
     <nav class="chat-list-header">
       <div class="chat-list-actions">
-        <a href="/profile" class="chat-profile-link">Профиль &#8250;</a>
+        {{{newChat}}}
+        {{{profileLink}}}
       </div>
       <div class="chat-list-search">
         <input type="text" name="search" id="search" class="search-input" placeholder="Поиск">
@@ -15,31 +16,27 @@
     </ul>
   </div>
   <div class="chat-content-wrapper">
-    <div class="chat-header">
-      <div class="chat-avatar">
-        <img src="https://picsum.photos/47/47" alt="user_name">
-      </div>
-      <div class="chat-user">
-        Илья
-      </div>
-      <button class="chat-menu">
-        &#8230;
-      </button>
-    </div>
+    {{#if selectedChat }}
+        {{{chatHeader}}}
+    {{/if}}
+
     <div class="chat-content">
-      <p>
-        <a href="/404">404</a>
-      </p>
-      <p>
-        <a href="/500">500</a>
-      </p>
-      ТУТ БУДЕТ СОДЕРЖИМОЕ ЧАТА
+      {{#if selectedChat }}
+          {{#each messages as |message|}}
+            {{{Message message=message userId=../userId}}}
+          {{/each}}
+      {{else}}
+        Выберите чат
+      {{/if}}
+
     </div>
-    <div class="message-panel">
-      <button class="message-attachment">&#128206;</button>
-      <input type="text" name="message" class="message-input" placeholder="Сообщение">
-      <button class="arrow-btn">&#11157;</button>
-    </div>
+      <form class="message-panel" id="message-form">
+        <input type="text" name="message" id="message-input" class="message-input" placeholder="Сообщение">
+        <button class="arrow-btn" type="submit">&#11157;</button>
+      </form>
+    {{#each errorMessages as |e|}}
+      <div class="input-error">{{ e }}</div>
+    {{/each}}
   </div>
 
 </div>
