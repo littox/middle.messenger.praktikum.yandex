@@ -21,6 +21,7 @@ import { Message } from './pages/chat/components/message';
 import { NotFoundException } from './utils/Exceptions';
 import { NotFound } from './pages/404';
 import { ServerError } from './pages/500';
+import './index.scss';
 
 registerComponent('TextInput', TextInput);
 registerComponent('ProfileInfoItem', ProfileInfoItem);
@@ -71,6 +72,9 @@ window.addEventListener('DOMContentLoaded', async () => {
   } catch (e) {
     if (e instanceof NotFoundException) {
       router.go(Routes.NotFound);
+    } else {
+      router.go(Routes.Error);
     }
+    console.log(e);
   }
 });
