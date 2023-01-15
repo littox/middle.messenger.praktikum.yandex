@@ -26,10 +26,12 @@ export class Route {
     private readonly blockClass: typeof Component,
     private readonly query: string,
   ) {
+
   }
 
   leave() {
     this.block = null;
+    console.log('sd');
   }
 
   match(pathname: string) {
