@@ -3,7 +3,7 @@ import { Component } from '../../../../utils/Component';
 import { withStore } from '../../../../hocs/withStore';
 import { AddUser } from '../add-user';
 import { RemoveUser } from '../remove-user';
-import chatsController from "../../../../controllers/ChatsController";
+import chatsController from '../../../../controllers/ChatsController';
 
 class ChatHeaderBase extends Component {
   addCustomEvents() {
@@ -14,8 +14,8 @@ class ChatHeaderBase extends Component {
 
     const removeChatCmd = this.getContent()?.querySelector('#chat-menu-remove-chat') as HTMLElement;
     removeChatCmd.onclick = async () => {
-      await chatsController.delete(this.props.selectedChat.id)
-    }
+      await chatsController.delete(this.props.selectedChat.id);
+    };
 
     const addUserCmd = this.getContent()?.querySelector('#chat-menu-add-user') as HTMLElement;
     const addUserModal = this.getContent()?.querySelector('#add-user-modal') as HTMLElement;
@@ -47,6 +47,8 @@ class ChatHeaderBase extends Component {
     this.children.removeUsers = new RemoveUser({ users: [] });
   }
 }
-export const withSelectedChat = withStore((state) => ({ selectedChat: (state.chats || []).find(({ id }) => id === state.selectedChat) }));
+export const withSelectedChat = withStore((state) => ({
+  selectedChat: (state.chats || []).find(({ id }) => id === state.selectedChat),
+}));
 
 export const ChatHeader = withSelectedChat(ChatHeaderBase);

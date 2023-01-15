@@ -13,7 +13,7 @@ type Options = {
 };
 type OptsWithNoMethod = Omit<Options, 'method'>;
 
-type HTTPMethod = <R>(url: string, options?: OptsWithNoMethod) => Promise<R>
+type HTTPMethod = <R>(url: string, options?: OptsWithNoMethod) => Promise<R>;
 
 function queryStringify(data: any) {
   if (typeof data !== 'object') {
@@ -26,32 +26,35 @@ function queryStringify(data: any) {
 
 export class HTTPTransport {
   static API_URL = 'https://ya-praktikum.tech/api/v2';
+
   static RESOURCE_URL = 'https://ya-praktikum.tech/api/v2/resources';
+
   protected endpoint: string;
 
   constructor(endpoint: string) {
     this.endpoint = `${HTTPTransport.API_URL}${endpoint}`;
   }
 
-  get: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => {
-    return this.request(
-      options.data ? `${this.endpoint}${url}${queryStringify(options.data)}` : `${this.endpoint}${url}`,
-      { ...options, method: Methods.GET },
-      options.timeout,
-    );
-  }
+  get: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => this.request(
+    options.data ? `${this.endpoint}${url}${queryStringify(options.data)}` : `${this.endpoint}${url}`,
+    { ...options, method: Methods.GET },
+    options.timeout,
+  );
 
-  post: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => {
-    return this.request(`${this.endpoint}${url}`, { ...options, method: Methods.POST }, options.timeout);
-  }
+  post: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => this.request(`${this.endpoint}${url}`, {
+    ...options,
+    method: Methods.POST,
+  }, options.timeout);
 
-  put: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => {
-    return this.request(`${this.endpoint}${url}`, { ...options, method: Methods.PUT }, options.timeout);
-  }
+  put: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => this.request(`${this.endpoint}${url}`, {
+    ...options,
+    method: Methods.PUT,
+  }, options.timeout);
 
-  delete: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => {
-    return this.request(`${this.endpoint}${url}`, { ...options, method: Methods.DELETE }, options.timeout);
-  }
+  delete: HTTPMethod = (url: string, options: OptsWithNoMethod = {}) => this.request(`${this.endpoint}${url}`, {
+    ...options,
+    method: Methods.DELETE,
+  }, options.timeout);
 
   // eslint-disable-next-line class-methods-use-this
   private request<Response>(url: string, options: Options, timeout = 5000): Promise<Response> {

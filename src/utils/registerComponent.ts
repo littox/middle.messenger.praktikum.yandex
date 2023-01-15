@@ -1,4 +1,5 @@
-import Handlebars  from 'handlebars';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Handlebars from 'handlebars';
 import { Component as ComponentType } from './Component';
 
 export function registerComponent<Props extends Record<string, any>>(

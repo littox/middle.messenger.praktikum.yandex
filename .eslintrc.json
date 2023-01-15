@@ -1,8 +1,9 @@
 {
   "extends": [
-    "airbnb",
-    "airbnb-typescript"
+    "airbnb-base",
+    "airbnb-typescript/base"
   ],
+  "root": true,
   "ignorePatterns": [
     "/dist/*",
     "/node_modules/*"
@@ -32,6 +33,18 @@
     "max-len": [
       "error",
       120
-    ]
+    ],
+
+    "no-console": ["error", { "allow": ["error"] }],
+    "consistent-return": "off",
+    "func-names": 0,
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "class-methods-use-this": "off",
+    "import/no-named-as-default": "off",
+    "no-restricted-syntax": ["error", "BinaryExpression[operator='of']"],
+    "no-continue": "off",
+    "no-param-reassign": ["error", {"props" :  false}],
+    "no-constructor-return": "warn",
+    "new-cap": "off"
   }
 }

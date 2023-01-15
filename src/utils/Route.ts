@@ -31,7 +31,6 @@ export class Route {
 
   leave() {
     this.block = null;
-    console.log('sd');
   }
 
   match(pathname: string) {

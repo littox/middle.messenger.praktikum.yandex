@@ -3,7 +3,6 @@ import { User } from './data/User';
 import { AddUserToChatData, ChatInfo, CreateChatData } from './data/Chats';
 
 export class ChatsAPI extends BaseAPI {
-
   constructor() {
     super('/chats');
   }
@@ -11,7 +10,7 @@ export class ChatsAPI extends BaseAPI {
   update = undefined;
 
   create(data: CreateChatData) {
-    return this.http.post(`/`, {
+    return this.http.post('/', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -20,13 +19,16 @@ export class ChatsAPI extends BaseAPI {
   }
 
   read(): Promise<ChatInfo[]> {
-    return this.http.get(`/`);
+    return this.http.get('/');
   }
 
   delete(id: number): Promise<unknown> {
-    return this.http.delete(`/`, {headers: {
-        'Content-Type': 'application/json'
-      }, data: { chatId: id }});
+    return this.http.delete('/', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: { chatId: id },
+    });
   }
 
   getUsers(id: number): Promise<Array<User & { role: string }>> {
@@ -38,7 +40,7 @@ export class ChatsAPI extends BaseAPI {
   }
 
   addUsers(data: AddUserToChatData): Promise<unknown> {
-    return this.http.put(`/users`, {
+    return this.http.put('/users', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -47,7 +49,7 @@ export class ChatsAPI extends BaseAPI {
   }
 
   deleteUsers(data: AddUserToChatData): Promise<unknown> {
-    return this.http.delete(`/users`, {
+    return this.http.delete('/users', {
       headers: {
         'Content-Type': 'application/json',
       },
