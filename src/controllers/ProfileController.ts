@@ -3,7 +3,7 @@ import { UserAPI, UserApiInstance } from '../api/UserAPI';
 import {
   User, UserInfo, UserPassword, UserSearch,
 } from '../api/data/User';
-import AuthController from "./AuthController";
+import AuthController from './AuthController';
 
 class ProfileController {
   private readonly api: UserAPI;

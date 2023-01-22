@@ -1,13 +1,13 @@
-import {Component} from '../../utils/Component';
+import { Component } from '../../utils/Component';
 import template from './chat.hbs';
-import {NewChat} from './components/new-chat';
-import {withStore} from '../../hocs/withStore';
+import { NewChat } from './components/new-chat';
+import { withStore } from '../../hocs/withStore';
 import ChatsController from '../../controllers/ChatsController';
 import MessagesController from '../../controllers/MessagesController';
-import {ChatHeader} from './components/chat-header';
-import {Link} from '../../components/link';
-import {Routes} from '../../utils/Router';
-import {ValidationRuleNames, validator} from "../../utils/Validator";
+import { ChatHeader } from './components/chat-header';
+import { Link } from '../../components/link';
+import { Routes } from '../../utils/Router';
+import { ValidationRuleNames, validator } from '../../utils/Validator';
 
 export class ChatBase extends Component {
   messageFormEvents() {
@@ -23,7 +23,7 @@ export class ChatBase extends Component {
       await MessagesController.sendMessage(this.props.selectedChat.id, input?.value);
       input.value = '';
     }
-    this.setProps({errorMessages: errorMessages});
+    this.setProps({ errorMessages });
   }
 
   addCustomEvents() {

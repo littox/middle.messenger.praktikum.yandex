@@ -1,6 +1,6 @@
-import {Component} from '../../utils/Component';
+import { Component } from '../../utils/Component';
 import template from './text-input.hbs';
-import {ValidationRuleNames, validator} from '../../utils/Validator';
+import { ValidationRuleNames, validator } from '../../utils/Validator';
 
 export type TextInputProps = {
   value?: string;
@@ -13,7 +13,6 @@ export type TextInputProps = {
 };
 
 export class TextInput extends Component<TextInputProps> {
-
   constructor(propsAndChildren: TextInputProps) {
     super({
       ...propsAndChildren,
@@ -27,12 +26,12 @@ export class TextInput extends Component<TextInputProps> {
     const inp = this.getContent()?.querySelector('input');
     inp?.focus();
     inp?.blur();
-    const {errors} = this.props;
+    const { errors } = this.props;
     return errors?.length === 0;
   }
 
   render(): DocumentFragment {
-    const {props} = this;
+    const { props } = this;
     return this.compile(template, {
       ...props,
       value: this.getContent()?.querySelector('input')?.value || props.value,
