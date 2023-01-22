@@ -4,7 +4,6 @@ import {
 } from './data/User';
 
 export class UserAPI extends BaseAPI {
-
   constructor() {
     super('/user');
   }
@@ -16,7 +15,7 @@ export class UserAPI extends BaseAPI {
   delete = undefined;
 
   updateProfile(data: UserInfo): Promise<User> {
-    return this.http.put(`/profile`, {
+    return this.http.put('/profile', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -25,7 +24,7 @@ export class UserAPI extends BaseAPI {
   }
 
   updatePassword(data: UserPassword): Promise<unknown> {
-    return this.http.put(`/password`, {
+    return this.http.put('/password', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -34,7 +33,7 @@ export class UserAPI extends BaseAPI {
   }
 
   updateAvatar(data: FormData): Promise<User> {
-    return this.http.put(`/profile/avatar`, { data });
+    return this.http.put('/profile/avatar', { data });
   }
 
   read(id: string): Promise<User> {
@@ -42,7 +41,7 @@ export class UserAPI extends BaseAPI {
   }
 
   search(data: UserSearch): Promise<User[]> {
-    return this.http.post(`/search`, {
+    return this.http.post('/search', {
       headers: {
         'Content-Type': 'application/json',
       },

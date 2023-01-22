@@ -13,10 +13,6 @@ interface AddUserProps {
 }
 
 export class AddUserBase extends Component<AddUserProps> {
-  constructor(propsAndChildren: AddUserProps) {
-    super(propsAndChildren);
-  }
-
   addUsersFormEvents() {
     const addUserForm = this.getContent()?.querySelector('#add-user');
     addUserForm?.addEventListener('submit', (event) => this.onUserAdd(event));

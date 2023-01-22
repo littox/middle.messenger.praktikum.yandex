@@ -36,7 +36,8 @@ export class Component<T extends Record<string, any> = any> {
     this.eventBus = () => eventBus;
 
     this.registerEvents();
-    this.eventBus().emit(Component.EVENTS.INIT);
+    // this.eventBus().emit(Component.EVENTS.INIT);
+    eventBus.emit(Component.EVENTS.INIT);
   }
 
   protected init() {
@@ -200,3 +201,5 @@ export class Component<T extends Record<string, any> = any> {
     });
   }
 }
+
+export default Component;

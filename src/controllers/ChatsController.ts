@@ -2,7 +2,7 @@ import { ChatsAPI } from '../api/ChatsAPI';
 import store from '../utils/Store';
 import { AddUserToChatData, CreateChatData } from '../api/data/Chats';
 import MessagesController from './MessagesController';
-import {HTTPTransport} from "../utils/HTTPTransport";
+import { HTTPTransport } from '../utils/HTTPTransport';
 
 class ChatsController {
   private readonly api: ChatsAPI;
@@ -41,7 +41,7 @@ class ChatsController {
       const res = await this.api.getUsers(data.chatId);
       store.set('selectedChatUsers', res);
     } catch (e: any) {
-      console.log('Ошибка удаления пользователя:', e);
+      console.error('Ошибка удаления пользователя:', e);
     }
   }
 
