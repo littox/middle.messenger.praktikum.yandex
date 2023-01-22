@@ -64,6 +64,11 @@ class Router {
     this.history.forward();
   }
 
+  public reset() {
+    this.routes = [];
+    this.currentRoute = null;
+  }
+
   private _onRoute(pathname: string) {
     const route = this.getRoute(pathname);
 
